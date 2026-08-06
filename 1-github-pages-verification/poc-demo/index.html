@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>尋找你的靈魂氣質色｜小紅書心理測驗 PoC</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen active">
+      <div class="badge">小紅書虛擬商品 ‧ 靜態Web POC</div>
+      <div class="hero-graphic">
+        <div class="glow-sphere sphere-1"></div>
+        <div class="glow-sphere sphere-2"></div>
+        <div class="hero-icon">✨</div>
+      </div>
+      <h1 class="title">探索你的「靈魂氣質色」</h1>
+      <p class="subtitle">只需 4 題，解鎖專屬於你的性格色彩密碼與氣質分析</p>
+      
+      <div class="code-verify-box">
+        <label for="unlock-code">🔑 測驗解鎖碼 (模擬買家卡密驗證)</label>
+        <input type="text" id="unlock-code" placeholder="請輸入 4 位數驗證碼 (預設: 8888)" value="8888">
+        <div id="code-error" class="error-msg"></div>
+      </div>
+
+      <button id="start-btn" class="btn btn-primary btn-pulse">
+        <span>開始靈魂測驗</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="screen">
+      <div class="quiz-header">
+        <div class="progress-bar-bg">
+          <div id="progress-fill" class="progress-fill" style="width: 25%;"></div>
+        </div>
+        <div class="step-indicator">
+          <span id="current-step">1</span> / <span id="total-steps">4</span>
+        </div>
+      </div>
+
+      <div class="question-card">
+        <h2 id="question-text" class="question-text">載入問題中...</h2>
+        <div id="options-container" class="options-container">
+          <!-- Options dynamically rendered -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="screen">
+      <div class="result-card" id="result-card">
+        <div class="result-badge" id="result-tag">靈魂色調</div>
+        <div class="result-color-preview" id="result-color-bg">
+          <span class="color-symbol" id="result-emoji">🎨</span>
+        </div>
+        <h2 class="result-title" id="result-title">淡雅薄荷綠</h2>
+        <p class="result-keywords" id="result-keywords">#冷靜理智 #直覺敏銳 #獨特審美</p>
+        
+        <div class="result-section">
+          <h3>🌟 靈魂性格解讀</h3>
+          <p id="result-desc">你擁有讓人感到放鬆的療癒力量，同時內心擁有極高的專注力與敏銳的直覺...</p>
+        </div>
+
+        <div class="result-section">
+          <h3>💡 幸運特質指標</h3>
+          <div class="traits-grid">
+            <div class="trait-item">
+              <span class="trait-label">直覺指數</span>
+              <div class="trait-bar"><div class="trait-fill" id="trait-1" style="width: 85%;"></div></div>
+            </div>
+            <div class="trait-item">
+              <span class="trait-label">療癒能力</span>
+              <div class="trait-bar"><div class="trait-fill" id="trait-2" style="width: 92%;"></div></div>
+            </div>
+            <div class="trait-item">
+              <span class="trait-label">創造天賦</span>
+              <div class="trait-bar"><div class="trait-fill" id="trait-3" style="width: 78%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-footer">
+          <p>小紅書專屬靈魂測驗卡 ‧ 存圖分享</p>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="restart-btn" class="btn btn-secondary">重新測驗</button>
+        <button id="share-btn" class="btn btn-primary">保存結果卡片</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

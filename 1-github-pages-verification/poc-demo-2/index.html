@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>尋找你的隱藏守護神獸｜小紅書心理測驗 Demo 2</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Outfit:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Stars Background -->
+  <div class="stars-bg"></div>
+
+  <div class="app-container">
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen active">
+      <div class="badge">小紅書爆款 ‧ 互動盲盒測驗 Demo 2</div>
+      
+      <div class="card-hero-box">
+        <div class="hero-orb">
+          <div class="orb-inner">🔮</div>
+        </div>
+        <div class="floating-sparkle s1">✨</div>
+        <div class="floating-sparkle s2">🌙</div>
+        <div class="floating-sparkle s3">⭐</div>
+      </div>
+
+      <h1 class="main-title">解鎖你的「隱藏守護神獸」</h1>
+      <p class="sub-title">穿越平行宇宙，尋找與你靈魂共振的遠古守護神獸與專屬幸運密碼</p>
+
+      <div class="verify-box">
+        <div class="verify-header">
+          <span>🗝️ 買家卡密激活 (預設卡密: 9999)</span>
+        </div>
+        <input type="text" id="passcode" placeholder="輸入 4 位卡密解鎖測驗" value="9999">
+        <div id="pass-error" class="error-tip"></div>
+      </div>
+
+      <button id="start-btn" class="glow-btn">
+        <span>開啟神獸召喚儀式</span>
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="screen">
+      <div class="top-nav">
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-bar" style="width: 25%;"></div>
+        </div>
+        <div class="step-text"><span id="curr-q">1</span>/4</div>
+      </div>
+
+      <div class="quiz-box">
+        <div class="q-tag" id="q-tag">星際地圖 ‧ 第 1 站</div>
+        <h2 class="q-title" id="q-title">載入星際問題中...</h2>
+
+        <div class="options-grid" id="options-grid">
+          <!-- Options rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="screen">
+      <div class="result-card-box" id="result-card">
+        <div class="card-header">
+          <span class="card-badge">小紅書專屬 ‧ 靈魂守護卡</span>
+          <span class="card-serial" id="serial-id">NO.2026-8899</span>
+        </div>
+
+        <div class="beast-avatar-wrap">
+          <div class="avatar-aura" id="aura-glow"></div>
+          <div class="beast-icon" id="beast-icon">🦊</div>
+        </div>
+
+        <h2 class="beast-name" id="beast-name">觀星幻狐</h2>
+        <div class="aura-type" id="aura-type">【 氣場類型：神秘星辰 ‧ 高階洞察者 】</div>
+
+        <div class="tags-row" id="tags-row">
+          <span class="tag">#高維智慧</span>
+          <span class="tag">#靈感敏銳</span>
+          <span class="tag">#獨具品味</span>
+        </div>
+
+        <div class="analysis-box">
+          <div class="box-title">🌌 神獸性格註解</div>
+          <p class="analysis-text" id="analysis-text">
+            你擁有如靈狐般的優雅與銳利洞察力，不喜隨波逐流。在混亂的環境中，你總能一眼看透本質，保持超然與理智。
+          </p>
+        </div>
+
+        <div class="power-stats">
+          <div class="box-title">⚡ 守護神能數值</div>
+          <div class="stat-row">
+            <span class="stat-name">靈魂洞察力</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-1" style="width: 95%;"></div></div>
+            <span class="stat-num" id="stat-num-1">95</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-name">創新想像力</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-2" style="width: 90%;"></div></div>
+            <span class="stat-num" id="stat-num-2">90</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-name">抗壓氣場值</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-3" style="width: 88%;"></div></div>
+            <span class="stat-num" id="stat-num-3">88</span>
+          </div>
+        </div>
+
+        <div class="lucky-tips">
+          <div class="tip-item">🍀 <b>幸運能量色：</b><span id="lucky-color">深空星海藍</span></div>
+          <div class="tip-item">🔮 <b>今日轉運籤：</b><span id="lucky-quote">「信任你的第一直覺，答案早已在心中。」</span></div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button id="retest-btn" class="sub-btn">重新召喚</button>
+        <button id="save-btn" class="glow-btn flex-1">保存神獸卡片</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
