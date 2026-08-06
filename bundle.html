@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>尋找你的隱藏守護神獸｜小紅書心理測驗 Demo 2</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Outfit:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+/* Cosmic Cyber Aesthetic for Xiaohongshu Demo 2 */
+:root {
+  --bg-gradient: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #090d16 100%);
+  --gold-glow: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
+  --cyan-glow: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  --purple-glow: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  --card-glass: rgba(255, 255, 255, 0.06);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --text-bright: #ffffff;
+  --text-dim: #94a3b8;
+  --font-serif: 'Noto Serif TC', serif;
+  --font-sans: 'Noto Sans TC', 'Outfit', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-gradient);
+  color: var(--text-bright);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.stars-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 150px 100px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 280px 300px, rgba(245,158,11,0.9), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 400px 180px, rgba(6,182,212,0.9), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 500px 500px;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: starPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes starPulse {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0.6; transform: scale(1.02); }
+}
+
+.app-container {
+  width: 100%;
+  max-width: 430px;
+  min-height: 700px;
+  background: rgba(13, 18, 30, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  border-radius: 28px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  padding: 24px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.screen {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.screen.active {
+  display: flex;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.badge {
+  align-self: center;
+  font-size: 0.72rem;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.card-hero-box {
+  position: relative;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.hero-orb {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: var(--gold-glow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.5);
+  animation: orbRotate 8s linear infinite;
+}
+
+.orb-inner {
+  font-size: 3.2rem;
+}
+
+@keyframes orbRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.floating-sparkle {
+  position: absolute;
+  font-size: 1.4rem;
+  animation: floatSparkle 3s ease-in-out infinite alternate;
+}
+
+.s1 { top: 10px; left: 20%; animation-delay: 0s; }
+.s2 { bottom: 15px; right: 22%; animation-delay: 1s; }
+.s3 { top: 30px; right: 20%; animation-delay: 1.8s; }
+
+@keyframes floatSparkle {
+  from { transform: translateY(0) scale(0.9); }
+  to { transform: translateY(-12px) scale(1.1); }
+}
+
+.main-title {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  text-align: center;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #ffffff 0%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sub-title {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 28px;
+  padding: 0 10px;
+}
+
+.glow-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+  background: var(--gold-glow);
+  color: #0f172a;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.glow-btn:active {
+  transform: scale(0.98);
+}
+
+.sub-btn {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-bright);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--cyan-glow);
+  transition: width 0.3s ease;
+}
+
+.step-text {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.quiz-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.q-tag {
+  font-size: 0.75rem;
+  color: #38bdf8;
+  margin-bottom: 8px;
+}
+
+.q-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  line-height: 1.45;
+  margin-bottom: 24px;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.opt-card {
+  background: var(--card-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 16px 18px;
+  color: var(--text-bright);
+  font-size: 0.92rem;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.opt-card:hover, .opt-card:active {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: #38bdf8;
+  transform: translateX(5px);
+}
+
+.result-card-box {
+  background: rgba(18, 24, 38, 0.85);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(245, 158, 11, 0.05);
+  margin-bottom: 18px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.card-badge {
+  font-size: 0.7rem;
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.card-serial {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  font-family: monospace;
+}
+
+.beast-avatar-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 12px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-aura {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--gold-glow);
+  filter: blur(15px);
+  opacity: 0.6;
+}
+
+.beast-icon {
+  font-size: 3.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.beast-name {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.aura-type {
+  font-size: 0.8rem;
+  color: #fbbf24;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.tags-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.tag {
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: #cbd5e1;
+}
+
+.box-title {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.analysis-box {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.analysis-text {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+}
+
+.power-stats {
+  margin-bottom: 14px;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  margin-top: 6px;
+}
+
+.stat-name { width: 75px; color: var(--text-dim); }
+
+.stat-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  background: var(--purple-glow);
+  border-radius: 3px;
+}
+
+.stat-num {
+  width: 24px;
+  text-align: right;
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.lucky-tips {
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tip-item { color: #e2e8f0; }
+
+.result-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.flex-1 { flex: 1; }
+  </style>
+</head>
+<body>
+  <div class="stars-bg"></div>
+
+  <div class="app-container">
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen active">
+      <div class="badge">小紅書爆款 ‧ 互動盲盒測驗 Demo 2</div>
+      
+      <div class="card-hero-box">
+        <div class="hero-orb">
+          <div class="orb-inner">🔮</div>
+        </div>
+        <div class="floating-sparkle s1">✨</div>
+        <div class="floating-sparkle s2">🌙</div>
+        <div class="floating-sparkle s3">⭐</div>
+      </div>
+
+      <h1 class="main-title">解鎖你的「隱藏守護神獸」</h1>
+      <p class="sub-title">穿越平行宇宙，尋找與你靈魂共振的遠古守護神獸與專屬幸運密碼</p>
+
+      <button id="start-btn" class="glow-btn">
+        <span>開啟神獸召喚儀式</span>
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="screen">
+      <div class="top-nav">
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-bar" style="width: 25%;"></div>
+        </div>
+        <div class="step-text"><span id="curr-q">1</span>/4</div>
+      </div>
+
+      <div class="quiz-box">
+        <div class="q-tag" id="q-tag">星際地圖 ‧ 第 1 站</div>
+        <h2 class="q-title" id="q-title">載入星際問題中...</h2>
+
+        <div class="options-grid" id="options-grid">
+          <!-- Options rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="screen">
+      <div class="result-card-box" id="result-card">
+        <div class="card-header">
+          <span class="card-badge">小紅書專屬 ‧ 靈魂守護卡</span>
+          <span class="card-serial" id="serial-id">NO.2026-8899</span>
+        </div>
+
+        <div class="beast-avatar-wrap">
+          <div class="avatar-aura" id="aura-glow"></div>
+          <div class="beast-icon" id="beast-icon">🦊</div>
+        </div>
+
+        <h2 class="beast-name" id="beast-name">觀星幻狐</h2>
+        <div class="aura-type" id="aura-type">【 氣場類型：神秘星辰 ‧ 高階洞察者 】</div>
+
+        <div class="tags-row" id="tags-row">
+          <span class="tag">#高維智慧</span>
+          <span class="tag">#靈感敏銳</span>
+          <span class="tag">#獨具品味</span>
+        </div>
+
+        <div class="analysis-box">
+          <div class="box-title">🌌 神獸性格註解</div>
+          <p class="analysis-text" id="analysis-text">
+            你擁有如靈狐般的優雅與銳利洞察力，不喜隨波逐流。在混亂的環境中，你總能一眼看透本質，保持超然與理智。
+          </p>
+        </div>
+
+        <div class="power-stats">
+          <div class="box-title">⚡ 守護神能數值</div>
+          <div class="stat-row">
+            <span class="stat-name">靈魂洞察力</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-1" style="width: 95%;"></div></div>
+            <span class="stat-num" id="stat-num-1">95</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-name">創新想像力</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-2" style="width: 90%;"></div></div>
+            <span class="stat-num" id="stat-num-2">90</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-name">抗壓氣場值</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" id="stat-3" style="width: 88%;"></div></div>
+            <span class="stat-num" id="stat-num-3">88</span>
+          </div>
+        </div>
+
+        <div class="lucky-tips">
+          <div class="tip-item">🍀 <b>幸運能量色：</b><span id="lucky-color">深空星海藍</span></div>
+          <div class="tip-item">🔮 <b>今日轉運籤：</b><span id="lucky-quote">「信任你的第一直覺，答案早已在心中。」</span></div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button id="retest-btn" class="sub-btn">重新召喚</button>
+        <button id="save-btn" class="glow-btn flex-1">保存神獸卡片</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+const questions = [
+  {
+    id: 1,
+    tag: "星際地圖 ‧ 第 1 站",
+    title: "當你獨自一人走進星光斑駁的古老神殿，中央懸浮著四件神器，你第一個想伸手觸碰的是？",
+    options: [
+      { text: "A. 刻滿神秘符文的星辰羅盤", beast: "fox" },
+      { text: "B. 燃燒著金藍色不滅之火的法杖", beast: "dragon" },
+      { text: "C. 散發溫柔微光的月光水晶石", beast: "dolphin" },
+      { text: "D. 記載著宇宙奧秘的古老羊皮卷", beast: "owl" }
+    ]
+  },
+  {
+    id: 2,
+    tag: "星際地圖 ‧ 第 2 站",
+    title: "在職場或日常團隊合作中，當面對突發緊急狀況時，你習慣扮演的角色是？",
+    options: [
+      { text: "A. 迅速找出盲點並定出精密解法的策略大腦", beast: "fox" },
+      { text: "B. 挺身而出、帶領大家突破重圍的衝鋒領袖", beast: "dragon" },
+      { text: "C. 撫平大家焦慮情緒、維持隊伍和諧的暖心基石", beast: "dolphin" },
+      { text: "D. 冷靜默默觀察，提供極具前瞻性見解的隱世智者", beast: "owl" }
+    ]
+  },
+  {
+    id: 3,
+    tag: "星際地圖 ‧ 第 3 站",
+    title: "當你獲得一天完全屬於自己的自由時光，你最渴望的充能情境是？",
+    options: [
+      { text: "A. 尋找有質感的特色咖啡廳，專注享受美感與靈感流動", beast: "fox" },
+      { text: "B. 挑戰戶外運動或新鮮事物，讓全身熱血沸騰", beast: "dragon" },
+      { text: "C. 陪伴家人或寵物，感受溫馨輕鬆的歲月靜好", beast: "dolphin" },
+      { text: "D. 宅在家中深度看書、研究有興趣的領域知識", beast: "owl" }
+    ]
+  },
+  {
+    id: 4,
+    tag: "星際地圖 ‧ 第 4 站",
+    title: "你認為自己靈魂中最不可被替代的魅力亮點是？",
+    options: [
+      { text: "A. 獨特的審美品味與超凡的直覺洞察", beast: "fox" },
+      { text: "B. 無所畏懼的勇氣與一往無前的執行力", beast: "dragon" },
+      { text: "C. 極致的溫柔包容力與令人放鬆的共情天賦", beast: "dolphin" },
+      { text: "D. 通透理智的清醒頭腦與深刻的思想底蘊", beast: "owl" }
+    ]
+  }
+];
+
+const beastsData = {
+  fox: {
+    name: "觀星九尾狐",
+    icon: "🦊",
+    aura: "【 氣場類型：神秘星辰 ‧ 高階洞察者 】",
+    glow: "linear-gradient(135deg, #a855f7 0%, #ec4899 100%)",
+    tags: ["#獨特審美", "#高維洞察", "#品味非凡"],
+    desc: "你的靈魂深處住著一隻優雅的觀星靈狐。你擁有超凡的直覺與美感品味，不喜隨波逐流。在複雜的人事物中，你總能一眼看透問題本質，保持清醒與獨特魅力。",
+    s1: 96, s2: 92, s3: 88,
+    color: "暗夜紫羅蘭 / 玫瑰星雲粉",
+    quote: "「信任你的第一直覺，答案早已在你的心靈深處。」"
+  },
+  dragon: {
+    name: "雲霄極光龍",
+    icon: "🐉",
+    aura: "【 氣場類型：熾熱陽光 ‧ 無畏領航者 】",
+    glow: "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)",
+    tags: ["#霸氣氣場", "#極致執行", "#王者風範"],
+    desc: "你的守護靈獸是翱翔於雲霄的極光神龍！你身上散發著強大的氣場與自信光芒，面對挑戰從不退縮。你的勇氣與魄力常常能感染周遭的人，成為隊伍的核心精神支柱。",
+    s1: 85, s2: 95, s3: 98,
+    color: "帝王烈焰金 / 極光藍",
+    quote: "「勇者無畏，你所渴望的未來正被你的果斷所創造。」"
+  },
+  dolphin: {
+    name: "深海療癒海豚",
+    icon: "🐬",
+    aura: "【 氣場類型：溫柔海洋 ‧ 靈魂撫慰者 】",
+    glow: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)",
+    tags: ["#共情力MAX", "#療癒能量", "#溫柔堅韌"],
+    desc: "你的靈魂呈現深海海豚般的溫柔與自由。你擁有極強的同理心與療癒能量，身邊的人跟你相處時總能感到放鬆與安心。你用溫柔包容世界，世界也終將溫柔回饋於你。",
+    s1: 90, s2: 86, s3: 92,
+    color: "薄荷冰川藍 / 珍珠白",
+    quote: "「溫柔是你最強大的武器，請繼續勇敢地去愛與被愛。」"
+  },
+  owl: {
+    name: "智慧深空貓頭鷹",
+    icon: "🦉",
+    aura: "【 氣場類型：理智星空 ‧ 隱世思想家 】",
+    glow: "linear-gradient(135deg, #10b981 0%, #3b82f6 100%)",
+    tags: ["#邏輯嚴密", "#冷靜自律", "#博學深邃"],
+    desc: "你的守護靈獸是棲息於智慧樹頂的貓頭鷹。你擁有極強的邏輯思考與學習能力，不輕易被情緒左右。你習慣用廣闊的視角俯瞰世界，是你圈子裡最權威的理智智囊。",
+    s1: 98, s2: 88, s3: 90,
+    color: "深空翡翠綠 / 智慧墨藍",
+    quote: "「靜水流深，你的沉穩與積澱將帶你抵達星辰大海。」"
+  }
+};
+
+let currentQIdx = 0;
+let scores = { fox: 0, dragon: 0, dolphin: 0, owl: 0 };
+
+const startScreen = document.getElementById('start-screen');
+const quizScreen = document.getElementById('quiz-screen');
+const resultScreen = document.getElementById('result-screen');
+const startBtn = document.getElementById('start-btn');
+
+const progressFill = document.getElementById('progress-fill');
+const currQSpan = document.getElementById('curr-q');
+const qTag = document.getElementById('q-tag');
+const qTitle = document.getElementById('q-title');
+const optionsGrid = document.getElementById('options-grid');
+
+const retestBtn = document.getElementById('retest-btn');
+const saveBtn = document.getElementById('save-btn');
+
+document.addEventListener('DOMContentLoaded', () => {
+  startBtn.addEventListener('click', handleStart);
+  retestBtn.addEventListener('click', handleRetest);
+  saveBtn.addEventListener('click', handleSave);
+});
+
+function handleStart() {
+  startScreen.classList.remove('active');
+  quizScreen.classList.add('active');
+  currentQIdx = 0;
+  scores = { fox: 0, dragon: 0, dolphin: 0, owl: 0 };
+  renderQ();
+}
+
+function renderQ() {
+  const q = questions[currentQIdx];
+  const pct = ((currentQIdx + 1) / questions.length) * 100;
+  progressFill.style.width = `${pct}%`;
+  currQSpan.textContent = currentQIdx + 1;
+  qTag.textContent = q.tag;
+  qTitle.textContent = q.title;
+  optionsGrid.innerHTML = '';
+  
+  q.options.forEach(opt => {
+    const btn = document.createElement('div');
+    btn.className = 'opt-card';
+    btn.textContent = opt.text;
+    btn.addEventListener('click', () => chooseOption(opt.beast));
+    optionsGrid.appendChild(btn);
+  });
+}
+
+function chooseOption(beast) {
+  scores[beast] = (scores[beast] || 0) + 1;
+  if (currentQIdx < questions.length - 1) {
+    currentQIdx++;
+    renderQ();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  quizScreen.classList.remove('active');
+  resultScreen.classList.add('active');
+  
+  let winner = 'fox';
+  let max = -1;
+  for (const key in scores) {
+    if (scores[key] > max) {
+      max = scores[key];
+      winner = key;
+    }
+  }
+  
+  const b = beastsData[winner];
+  const randomSerial = `NO.2026-${Math.floor(1000 + Math.random() * 9000)}`;
+  document.getElementById('serial-id').textContent = randomSerial;
+  document.getElementById('beast-icon').textContent = b.icon;
+  document.getElementById('beast-name').textContent = b.name;
+  document.getElementById('aura-type').textContent = b.aura;
+  document.getElementById('aura-glow').style.background = b.glow;
+  
+  const tagsRow = document.getElementById('tags-row');
+  tagsRow.innerHTML = b.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  
+  document.getElementById('analysis-text').textContent = b.desc;
+  document.getElementById('stat-1').style.width = `${b.s1}%`;
+  document.getElementById('stat-num-1').textContent = b.s1;
+  document.getElementById('stat-2').style.width = `${b.s2}%`;
+  document.getElementById('stat-num-2').textContent = b.s2;
+  document.getElementById('stat-3').style.width = `${b.s3}%`;
+  document.getElementById('stat-num-3').textContent = b.s3;
+  document.getElementById('lucky-color').textContent = b.color;
+  document.getElementById('lucky-quote').textContent = b.quote;
+}
+
+function handleRetest() {
+  resultScreen.classList.remove('active');
+  startScreen.classList.add('active');
+}
+
+function handleSave() {
+  alert('✨ 神獸報告卡生成成功！請長按螢幕截圖保存，分享至小紅書解鎖今日幸運氣場！');
+}
+  </script>
+</body>
+</html>
