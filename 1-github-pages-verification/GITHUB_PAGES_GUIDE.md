@@ -35,7 +35,7 @@ git commit -m "feat: 建立小紅書心理測驗專案與 GitHub Pages PoC Demo"
 
 1. 開啟瀏覽器登入 GitHub，點擊右上角的 **`+`** -> **`New repository`**。
 2. 填寫倉庫資訊：
-   - **Repository name**：例如 `red-quiz-demo`（或您喜歡的名稱）。
+   - **Repository name**：請輸入 `stsatic-quiz-demo`。
    - **Description**：小紅書心理測驗靜態 Web Demo。
    - **Public / Private**：選擇 **Public**（GitHub Pages 免費版需設為 Public）。
    - **Initialize repository**：**不要勾選** Add a README file（因為本地已有檔案）。
@@ -48,8 +48,8 @@ git commit -m "feat: 建立小紅書心理測驗專案與 GitHub Pages PoC Demo"
 在 GitHub 建立成功後，複製頁面上的指令，在終端機執行：
 
 ```bash
-# 1. 綁定遠端 GitHub 倉庫 (請將 USERNAME 與 red-quiz-demo 替換為您的帳號與倉庫名)
-git remote add origin https://github.com/USERNAME/red-quiz-demo.git
+# 1. 綁定遠端 GitHub 倉庫 (請將 USERNAME 替換為您的 GitHub 帳號)
+git remote add origin https://github.com/USERNAME/stsatic-quiz-demo.git
 
 # 2. 將預設分支命名為 main
 git branch -M main
@@ -69,7 +69,7 @@ git push -u origin main
 因為我們使用的是 `git subtree` 技術。它的好處是：
 - 您的專案可以保持整潔，整個 `小紅書心理測驗開發與專案紀錄` 作為一個主 Git 倉庫進行版控與備份。
 - `git subtree push --prefix 1-github-pages-verification/poc-demo origin gh-pages` 這行指令會**自動只抓取** `poc-demo` 裡面的內容（`index.html`、`style.css`、`app.js`），並把它們設為 `gh-pages` 分支的最頂層（Root）。
-- 這樣部署出來的 GitHub Pages 網址最簡短好記：`https://USERNAME.github.io/red-quiz-demo/`，而**不需要**在網址後面帶長長的子目錄路徑！
+- 這樣部署出來的 GitHub Pages 網址最簡短好記：`https://USERNAME.github.io/stsatic-quiz-demo/`，而**不需要**在網址後面帶長長的子目錄路徑！
 
 ---
 
@@ -96,26 +96,68 @@ git subtree push --prefix 1-github-pages-verification/poc-demo origin gh-pages
 
 1. 儲存後等待 1~3 分鐘，重新整理 GitHub Pages 設定頁面。
 2. 頂端會出現綠色提示標籤：
-   > **Your site is live at `https://USERNAME.github.io/red-quiz-demo/`**
+   > **Your site is live at `https://USERNAME.github.io/stsatic-quiz-demo/`**
 3. 點擊該連結，即可在瀏覽器中體驗完整的「尋找你的靈魂氣質色」心理測驗！
 
 ---
 
-## 📱 步驟六：手機與小紅書測試技巧
+## 🔄 GitHub Pages Demo 切換切換指令教學
 
-1. **生成 QR Code 二維碼**：
-   - 將您的 GitHub Pages 網址（例如 `https://USERNAME.github.io/red-quiz-demo/`）貼到二維碼生成器（如 [草料二維碼](https://cli.im/)）。
-   - 用手機相機或微信/小紅書掃碼開啟，測試手機適配性與流暢度。
+當您有多個 Demo（例如 `poc-demo` 與 `poc-demo-2`）並希望切換 GitHub Pages 目前展示哪一個 Demo 時，請使用以下指令：
 
-2. **卡密解鎖測試**：
-   - 預設卡密為 `8888`，可於 Demo 開始頁面進行模擬輸入驗證。
+### 1️⃣ 切換展示 Demo 1 (尋找你的靈魂氣質色)
 
-3. **未來更新程式碼後重新發佈**：
-   若修改了 `poc-demo` 中的內容，只需執行以下兩行指令即可更新上線：
+```powershell
+git subtree split --prefix 1-github-pages-verification/poc-demo -b temp-gh-pages
+git push origin temp-gh-pages:gh-pages --force
+git branch -D temp-gh-pages
+```
 
-   ```bash
-   git add .
-   git commit -m "update: 更新心理測驗題庫與樣式"
-   git push origin main
-   git subtree push --prefix 1-github-pages-verification/poc-demo origin gh-pages
-   ```
+### 2️⃣ 切換展示 Demo 2 (解鎖你的隱藏守護神獸)
+
+```powershell
+git subtree split --prefix 1-github-pages-verification/poc-demo-2 -b temp-gh-pages
+git push origin temp-gh-pages:gh-pages --force
+git branch -D temp-gh-pages
+```
+
+---
+
+## 📝 日常開發與程式碼更新 Push 流程
+
+當您修改了程式碼（例如修改了題庫、調整了 CSS 樣式或新增了商品文檔），完整更新需包含**兩個步驟**：
+
+### 步驟一：備份整專案到 GitHub `main` 主分支 (保存所有程式碼)
+
+```powershell
+# 1. 追蹤所有更動過的檔案
+git add .
+
+# 2. 提交修改紀錄 (說明這次改了什麼)
+git commit -m "update: 修改心理測驗樣式與說明文檔"
+
+# 3. 推送到 GitHub main 分支
+git push origin main
+```
+
+---
+
+### 步驟二：更新 GitHub Pages 線上網站 (讓網路體驗同步更新)
+
+根據您當前想要線上展示的是哪一個 Demo，執行對應的推送指令：
+
+```powershell
+# 如果是更新 Demo 2 (守護神獸) 的線上網站：
+git subtree split --prefix 1-github-pages-verification/poc-demo-2 -b temp-gh-pages
+git push origin temp-gh-pages:gh-pages --force
+git branch -D temp-gh-pages
+
+# 如果是更新 Demo 1 (靈魂氣質色) 的線上網站：
+git subtree split --prefix 1-github-pages-verification/poc-demo -b temp-gh-pages
+git push origin temp-gh-pages:gh-pages --force
+git branch -D temp-gh-pages
+```
+
+
+
+
