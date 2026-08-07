@@ -108,14 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function handleStart() {
-  const inputCode = unlockCodeInput.value.trim();
-  // 模擬卡密驗證 (預設 8888 或任何 4 位數)
-  if (!inputCode) {
-    codeError.textContent = "請輸入測驗解鎖碼！";
-    return;
-  }
-  
-  codeError.textContent = "";
   startScreen.classList.remove('active');
   quizScreen.classList.add('active');
   

@@ -4,20 +4,20 @@
  * 運作邏輯：
  * 1. 讀取 `tools/config.js` 的測驗登錄清單。
  * 2. 自動將 `src/quizzes/[quiz-id]/` 的 index.html, style.css, app.js 縫合內聯成單一 HTML 檔。
- * 3. 帶入 config 設定的 Title, 卡密 (passcode) 與外觀主題色。
- * 4. 呼叫/生成帶有 AES-256 解密邏輯的單一靜態 HTML。
- * 5. 輸出產物至 `release/q/[quiz-id]/index.html`。
+ * 3. 呼叫 `staticrypt` CLI 命令，帶入對應的卡密 (passcode)、Title、主題色彩進行真正 AES-256 全密文加密。
+ * 4. 將輸出的加密單檔 HTML 寫入至 `release/q/[quiz-id]/index.html`。
  */
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 const config = require('./config.js');
 
 const rootDir = path.join(__dirname, '..');
 const srcDir = path.join(rootDir, 'src', 'quizzes');
 const releaseDir = path.join(rootDir, 'release', 'q');
 
-console.log('🚀 開始執行全站心理測驗自動打包與加密流程...\n');
+console.log('🚀 開始執行全站心理測驗自動打包與 StatiCrypt 加密流程...\n');
 
 // 確保 release 目錄存在
 if (!fs.existsSync(releaseDir)) {
@@ -66,11 +66,50 @@ Object.keys(config).forEach(quizId => {
     bundleHtml = bundleHtml.replace('</body>', `<script>\n${jsContent}\n</script>\n</body>`);
   }
 
-  // 3. 寫入單一 Bundle 至 release 目錄
-  const targetReleaseFile = path.join(quizReleasePath, 'index.html');
-  fs.writeFileSync(targetReleaseFile, bundleHtml, 'utf8');
+  // 寫入臨時單檔 temp_bundle.html
+  const tempBundleFile = path.join(rootDir, 'tools', `temp_${quizId}.html`);
+  fs.writeFileSync(tempBundleFile, bundleHtml, 'utf8');
 
-  console.log(`  ✅ 成功輸出單一 HTML 到：release/q/${quizId}/index.html (對應卡密: ${item.passcode})`);
+  // 3. 呼叫 npx staticrypt 命令進行 AES-256 加密
+  try {
+    const passcode = item.passcode || '8888';
+    const title = item.title || '🔒 心理測驗解鎖';
+    const instructions = item.instructions || '請輸入解鎖卡密';
+    const buttonText = item.buttonText || '解鎖並開始測驗 ➔';
+    const placeholder = item.placeholder || '請輸入解鎖卡密';
+    const primaryColor = item.themeColor || '#6c5ce7';
+
+    // 命令組合
+    const cmd = `npx staticrypt "${tempBundleFile}" -p "${passcode}" -d "${quizReleasePath}" --short --template-title "${title}" --template-instructions "${instructions}" --template-button "${buttonText}" --template-placeholder "${placeholder}" --template-color-primary "${primaryColor}" --template-color-secondary "#0b0f19"`;
+
+    execSync(cmd, { cwd: rootDir, stdio: 'inherit', shell: true });
+
+    // StatiCrypt 產生的檔案名稱預設為 temp_[quizId].html，需要重命名為 index.html
+    const generatedFile = path.join(quizReleasePath, `temp_${quizId}.html`);
+    const finalReleaseFile = path.join(quizReleasePath, 'index.html');
+
+    if (fs.existsSync(generatedFile)) {
+      if (fs.existsSync(finalReleaseFile)) {
+        fs.unlinkSync(finalReleaseFile);
+      }
+      fs.renameSync(generatedFile, finalReleaseFile);
+    }
+
+    console.log(`  ✅ [${quizId}] 成功加密！輸出檔：release/q/${quizId}/index.html (卡密: ${passcode})`);
+  } catch (err) {
+    console.error(`  ❌ [${quizId}] 加密過程失敗:`, err.message);
+  } finally {
+    // 清理臨時檔
+    if (fs.existsSync(tempBundleFile)) {
+      fs.unlinkSync(tempBundleFile);
+    }
+  }
 });
 
-console.log('\n🎉 所有測驗已成功打包完成！可直接推送到 GitHub Pages / EdgeOne 進行單一網域部署！');
+// 清理 staticrypt 設定檔
+const staticryptConfig = path.join(rootDir, '.staticrypt.json');
+if (fs.existsSync(staticryptConfig)) {
+  fs.unlinkSync(staticryptConfig);
+}
+
+console.log('\n🎉 所有測驗已成功通過 StatiCrypt 完成加密打包！');
