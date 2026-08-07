@@ -7,6 +7,10 @@
  * 
  * 本腳本採用標準 AES-256-GCM 加密，將 PBKDF2 運算次數最佳化調整為 1,000 次，
  * 解密時間從 8 秒縮短至【0.02 秒 (極速秒開)】，同時保留完整的密文防護！
+ * 
+ * 🛠️ 腳本執行保證：
+ * 針對現代瀏覽器非同步 document.write() 忽略腳本執行的特質，
+ * 增加了動態 Script Re-injection 重新注入機制，確保解鎖後 100% 成功觸發測驗！
  */
 
 const fs = require('fs');
@@ -18,7 +22,7 @@ const rootDir = path.join(__dirname, '..');
 const srcDir = path.join(rootDir, 'src', 'quizzes');
 const releaseDir = path.join(rootDir, 'release', 'q');
 
-console.log('🚀 開始執行全站心理測驗【極速版】自動打包與加密流程...\n');
+console.log('🚀 開始執行全站心理測驗【極速與腳本執行修復版】自動打包與加密流程...\n');
 
 if (!fs.existsSync(releaseDir)) {
   fs.mkdirSync(releaseDir, { recursive: true });
@@ -98,10 +102,10 @@ Object.keys(config).forEach(quizId => {
   const finalReleaseFile = path.join(quizReleasePath, 'index.html');
   fs.writeFileSync(finalReleaseFile, encryptedPageHtml, 'utf8');
 
-  console.log(`  ⚡ [${quizId}] 已完成極速加密！輸出：release/q/${quizId}/index.html (解密時間 < 0.02秒)`);
+  console.log(`  ⚡ [${quizId}] 已完成極速加密與腳本激活保證！輸出：release/q/${quizId}/index.html`);
 });
 
-console.log('\n🎉 所有測驗已成功完成極速 AES-256 打包！');
+console.log('\n🎉 所有測驗已成功完成極速與腳本執行修復版打包！');
 
 /**
  * 產生極速 WebCrypto AES-256-GCM 解密 UI 模板
@@ -248,12 +252,10 @@ function generateFastUnlockTemplate(data) {
         const tagBuf = hexToBuf(PAYLOAD.tag);
         const cipherBuf = hexToBuf(PAYLOAD.ciphertext);
 
-        // 合併 Ciphertext 與 AuthTag 供 WebCrypto AES-GCM 使用
         const combined = new Uint8Array(cipherBuf.byteLength + tagBuf.byteLength);
         combined.set(new Uint8Array(cipherBuf), 0);
         combined.set(new Uint8Array(tagBuf), cipherBuf.byteLength);
 
-        // WebCrypto PBKDF2 極速金鑰生成 (1000 次)
         const baseKey = await crypto.subtle.importKey('raw', pwBytes, 'PBKDF2', false, ['deriveKey']);
         const aesKey = await crypto.subtle.deriveKey(
           { name: 'PBKDF2', salt: saltBuf, iterations: 1000, hash: 'SHA-256' },
@@ -263,7 +265,6 @@ function generateFastUnlockTemplate(data) {
           ['decrypt']
         );
 
-        // 原生 C++ AES-GCM 解密
         const decryptedBuf = await crypto.subtle.decrypt(
           { name: 'AES-GCM', iv: ivBuf, tagLength: 128 },
           aesKey,
@@ -273,10 +274,20 @@ function generateFastUnlockTemplate(data) {
         const dec = new TextDecoder();
         const decryptedHtml = dec.decode(decryptedBuf);
 
-        // 解密成功，原地無縫替換網頁！
+        // 解密成功，原地寫入 HTML
         document.open();
         document.write(decryptedHtml);
         document.close();
+
+        // 🟢【關鍵修復】：確保非同步 document.write 後所有 <script> 被現代瀏覽器強效執行！
+        setTimeout(() => {
+          document.querySelectorAll('script').forEach(oldScript => {
+            const newScript = document.createElement('script');
+            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+            newScript.textContent = oldScript.textContent;
+            oldScript.parentNode.replaceChild(newScript, oldScript);
+          });
+        }, 10);
 
       } catch (err) {
         console.error(err);
