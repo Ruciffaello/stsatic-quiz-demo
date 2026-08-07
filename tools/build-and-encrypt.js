@@ -1,16 +1,9 @@
 /**
  * 🛠️ 高效能極速版一鍵打包與 StatiCrypt (AES-256-GCM) 加密腳本
  * 
- * 🔍 效能問題說明：
- * 原版 StatiCrypt 預設使用了高達 600,000 次的 PBKDF2 運算，
- * 導致瀏覽器與手機解密時需耗時 8~15 秒以上。
- * 
- * 本腳本採用標準 AES-256-GCM 加密，將 PBKDF2 運算次數最佳化調整為 1,000 次，
- * 解密時間從 8 秒縮短至【0.02 秒 (極速秒開)】，同時保留完整的密文防護！
- * 
- * 🛠️ 腳本執行保證：
- * 針對現代瀏覽器非同步 document.write() 忽略腳本執行的特質，
- * 增加了動態 Script Re-injection 重新注入機制，確保解鎖後 100% 成功觸發測驗！
+ * 🔍 DOM 替換與腳本執行修復：
+ * 避開現代瀏覽器對非同步 document.write() 的限制與腳本阻擋，
+ * 採用 DOMParser + 元素替換 + Script 動態注入，確保解密後 100% 無縫替換網頁並執行 JS 邏輯！
  */
 
 const fs = require('fs');
@@ -22,7 +15,7 @@ const rootDir = path.join(__dirname, '..');
 const srcDir = path.join(rootDir, 'src', 'quizzes');
 const releaseDir = path.join(rootDir, 'release', 'q');
 
-console.log('🚀 開始執行全站心理測驗【極速與腳本執行修復版】自動打包與加密流程...\n');
+console.log('🚀 開始執行全站心理測驗【DOMParser 穩定解密版】自動打包與加密流程...\n');
 
 if (!fs.existsSync(releaseDir)) {
   fs.mkdirSync(releaseDir, { recursive: true });
@@ -73,7 +66,7 @@ Object.keys(config).forEach(quizId => {
   const salt = crypto.randomBytes(16);
   const iv = crypto.randomBytes(12);
 
-  // PBKDF2 金鑰生成 (1000 迭代，效能最佳)
+  // PBKDF2 金鑰生成 (1000 迭代)
   const key = crypto.pbkdf2Sync(passcode, salt, 1000, 32, 'sha256');
 
   const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
@@ -102,10 +95,10 @@ Object.keys(config).forEach(quizId => {
   const finalReleaseFile = path.join(quizReleasePath, 'index.html');
   fs.writeFileSync(finalReleaseFile, encryptedPageHtml, 'utf8');
 
-  console.log(`  ⚡ [${quizId}] 已完成極速加密與腳本激活保證！輸出：release/q/${quizId}/index.html`);
+  console.log(`  ⚡ [${quizId}] 已完成極速加密與 DOMParser 解密優化！輸出：release/q/${quizId}/index.html`);
 });
 
-console.log('\n🎉 所有測驗已成功完成極速與腳本執行修復版打包！');
+console.log('\n🎉 所有測驗已成功完成打包！');
 
 /**
  * 產生極速 WebCrypto AES-256-GCM 解密 UI 模板
@@ -274,20 +267,26 @@ function generateFastUnlockTemplate(data) {
         const dec = new TextDecoder();
         const decryptedHtml = dec.decode(decryptedBuf);
 
-        // 解密成功，原地寫入 HTML
-        document.open();
-        document.write(decryptedHtml);
-        document.close();
+        // 🟢【DOMParser 完美替換法】：不使用 document.write()，徹底避免瀏覽器鎖死腳本！
+        const parser = new DOMParser();
+        const newDoc = parser.parseFromString(decryptedHtml, 'text/html');
 
-        // 🟢【關鍵修復】：確保非同步 document.write 後所有 <script> 被現代瀏覽器強效執行！
-        setTimeout(() => {
-          document.querySelectorAll('script').forEach(oldScript => {
-            const newScript = document.createElement('script');
-            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-            newScript.textContent = oldScript.textContent;
-            oldScript.parentNode.replaceChild(newScript, oldScript);
-          });
-        }, 10);
+        // 1. 替換 Head (CSS / Title / Fonts)
+        document.head.innerHTML = newDoc.head.innerHTML;
+
+        // 2. 替換 Body HTML
+        document.body.innerHTML = newDoc.body.innerHTML;
+        document.body.className = newDoc.body.className;
+        document.body.style.cssText = newDoc.body.style.cssText;
+
+        // 3. 解析並動態執行所有內嵌 Script 腳本
+        const scripts = newDoc.querySelectorAll('script');
+        scripts.forEach(oldScript => {
+          const newScript = document.createElement('script');
+          Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+          newScript.textContent = oldScript.textContent;
+          document.body.appendChild(newScript);
+        });
 
       } catch (err) {
         console.error(err);
