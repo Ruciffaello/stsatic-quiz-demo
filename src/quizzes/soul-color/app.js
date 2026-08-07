@@ -98,14 +98,18 @@ const optionsContainer = document.getElementById('options-container');
 const restartBtn = document.getElementById('restart-btn');
 const shareBtn = document.getElementById('share-btn');
 
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-  totalStepsSpan.textContent = questions.length;
-  
-  startBtn.addEventListener('click', handleStart);
-  restartBtn.addEventListener('click', handleRestart);
-  shareBtn.addEventListener('click', handleSaveResult);
-});
+function initApp() {
+  if (totalStepsSpan) totalStepsSpan.textContent = questions.length;
+  if (startBtn) startBtn.addEventListener('click', handleStart);
+  if (restartBtn) restartBtn.addEventListener('click', handleRestart);
+  if (shareBtn) shareBtn.addEventListener('click', handleSaveResult);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 function handleStart() {
   startScreen.classList.remove('active');

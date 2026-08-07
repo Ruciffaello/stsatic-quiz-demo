@@ -112,11 +112,17 @@ const optionsGrid = document.getElementById('options-grid');
 const retestBtn = document.getElementById('retest-btn');
 const saveBtn = document.getElementById('save-btn');
 
-document.addEventListener('DOMContentLoaded', () => {
-  startBtn.addEventListener('click', handleStart);
-  retestBtn.addEventListener('click', handleRetest);
-  saveBtn.addEventListener('click', handleSave);
-});
+function initApp() {
+  if (startBtn) startBtn.addEventListener('click', handleStart);
+  if (retestBtn) retestBtn.addEventListener('click', handleRetest);
+  if (saveBtn) saveBtn.addEventListener('click', handleSave);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 function handleStart() {
   startScreen.classList.remove('active');
