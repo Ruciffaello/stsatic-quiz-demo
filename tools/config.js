@@ -38,21 +38,20 @@ module.exports = {
     buttonText: "解鎖神獸測驗 ➔",
     themeColor: "#00cec9", // 主題配色
     bgStyle: "linear-gradient(135deg, #050515 0%, #0a192f 100%)",
-  }
+  },
 
-  /* 
   // ------------------------------------------------------------------
-  // 範例：新增測驗 03 模板
+  // 測驗 03: 戀愛依戀類型與契合度診斷 (love-attachment)
+  // 網址路徑: https://quiz.yourdomain.com/q/love-attachment/
   // ------------------------------------------------------------------
-  , "career-potential": {
-    id: "career-potential",
-    title: "職場潛力與避坑指南 ｜ 心理測驗",
-    passcode: "6666",
-    instructions: "請輸入小紅書發貨卡密解鎖測驗",
+  "love-attachment": {
+    id: "love-attachment",
+    title: "戀愛依戀類型與契合度診斷 ｜ 小紅書專屬心理測驗",
+    passcode: "7777", // 小紅書自動發貨卡密
+    instructions: "請輸入您於小紅書下單取得的 4 位數專屬解鎖卡密（預設卡密：7777）",
     placeholder: "請輸入解鎖卡密",
-    buttonText: "開啟性向診斷 ➔",
-    themeColor: "#ff7675",
-    bgStyle: "linear-gradient(135deg, #111 0%, #222 100%)",
+    buttonText: "解鎖戀愛診斷 ➔",
+    themeColor: "#ec4899", // 浪漫粉紫主題色
+    bgStyle: "linear-gradient(135deg, #1e1b4b 0%, #31103f 50%, #4c0519 100%)",
   }
-  */
 };

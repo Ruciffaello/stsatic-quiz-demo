@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>戀愛依戀類型與契合度診斷 ｜ 小紅書心理測驗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="app-viewport">
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen active">
+      <div class="header-badge">💖 情感關係 ‧ 依戀心理學診斷</div>
+      <div class="hero-orbit">
+        <div class="glow-sphere"></div>
+        <div class="hero-heart">💌</div>
+      </div>
+      <h1 class="hero-title">解鎖你的「戀愛依戀類型」</h1>
+      <p class="hero-subtitle">只需 4 題情境心理剖析，揭開你在愛情中的潛意識模式與理想契合伴侶</p>
+
+      <button id="start-btn" class="btn btn-romantic">
+        <span>開啟戀愛靈魂診斷</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </button>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="screen">
+      <div class="progress-track">
+        <div id="progress-fill" class="progress-bar" style="width: 25%;"></div>
+      </div>
+      <div class="step-badge">
+        <span id="curr-q">1</span> / 4 題
+      </div>
+
+      <div class="question-container">
+        <div id="q-tag" class="q-tag">戀愛情境 ‧ 第 1 站</div>
+        <h2 id="q-title" class="q-title">載入問題中...</h2>
+        <div id="options-grid" class="options-grid">
+          <!-- Options rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="screen">
+      <div id="result-card-box" class="result-card-box">
+        <div class="card-header">
+          <span class="card-brand">小紅書專屬 ‧ 戀愛依戀報告</span>
+          <span id="serial-id" class="serial-id">NO.LOVE-2026-7777</span>
+        </div>
+
+        <div id="type-avatar-glow" class="type-avatar-glow">
+          <div id="type-icon" class="type-icon">🌸</div>
+        </div>
+
+        <h2 id="type-name" class="type-title">安全溫柔型依戀</h2>
+        <div id="type-subtitle" class="type-subtitle">【 戀愛氣場：信任感MAX ‧ 溫柔陪伴者 】</div>
+
+        <div id="tags-row" class="tags-row">
+          <!-- Tags rendered dynamically -->
+        </div>
+
+        <div class="analysis-section">
+          <h3>💌 戀愛心理深度解讀</h3>
+          <p id="analysis-text" class="analysis-text">在感情中，你擁有極高的心理安全感與共情力...</p>
+        </div>
+
+        <div class="stats-section">
+          <h3>📊 戀愛人格指標</h3>
+          <div class="stat-row">
+            <span class="stat-label">親密需求</span>
+            <div class="stat-bar-bg"><div id="stat-1" class="stat-bar-fill" style="width: 88%;"></div></div>
+            <span id="stat-num-1" class="stat-num">88</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">獨立自信</span>
+            <div class="stat-bar-bg"><div id="stat-2" class="stat-bar-fill" style="width: 92%;"></div></div>
+            <span id="stat-num-2" class="stat-num">92</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">情緒穩定</span>
+            <div class="stat-bar-bg"><div id="stat-3" class="stat-bar-fill" style="width: 95%;"></div></div>
+            <span id="stat-num-3" class="stat-num">95</span>
+          </div>
+        </div>
+
+        <div class="match-section">
+          <p class="match-item">💞 最佳契合伴侶：<strong id="match-type">安全型 / 溫柔傾聽者</strong></p>
+          <p id="match-quote" class="match-quote">「好的愛情，是讓彼此都在愛裡成為更好、更自在的人。」</p>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button id="retest-btn" class="btn btn-secondary">重新測試</button>
+        <button id="save-btn" class="btn btn-romantic">保存報告卡片</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
