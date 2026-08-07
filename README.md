@@ -70,6 +70,7 @@ node tools/build-and-encrypt.js
 
 - 🤖 [AGENTS.md (AI Agent 開發規範與 SOP 指南)](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/AGENTS.md)
 - ⚙️ [GitHub Actions 全自動化 CI/CD 部署機制說明](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/docs/GITHUB_ACTIONS_DEPLOYMENT.md)
+- ☁️ [騰訊雲 EdgeOne Pages 控制台設定指南](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/docs/TENCENT_EDGEONE_GUIDE.md)
 - 🛠️ [一鍵打包與 config.js 設定教學](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/docs/BUILD_AND_ENCRYPT.md)
 - 🏛️ [單一網域架構與路由說明](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/docs/SINGLE_DOMAIN_ARCHITECTURE.md)
 - 🔒 [StatiCrypt 卡密防護與加密指南](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/docs/STATICRYPT_GUIDE.md)
