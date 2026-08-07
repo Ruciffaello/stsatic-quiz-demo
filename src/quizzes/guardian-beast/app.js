@@ -102,8 +102,6 @@ const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
 const resultScreen = document.getElementById('result-screen');
 const startBtn = document.getElementById('start-btn');
-const passcodeInput = document.getElementById('passcode');
-const passError = document.getElementById('pass-error');
 
 const progressFill = document.getElementById('progress-fill');
 const currQSpan = document.getElementById('curr-q');
@@ -121,13 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function handleStart() {
-  const code = passcodeInput.value.trim();
-  if (!code) {
-    passError.textContent = "請輸入卡密解鎖！";
-    return;
-  }
-  
-  passError.textContent = "";
   startScreen.classList.remove('active');
   quizScreen.classList.add('active');
   
