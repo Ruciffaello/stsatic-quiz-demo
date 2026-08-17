@@ -212,5 +212,5 @@ function handleRetest() {
 }
 
 function handleSave() {
-  alert('✨ 神獸報告卡生成成功！請長按螢幕截圖保存，分享至小紅書解鎖今日幸運氣場！');
+  alert('✨ 神獸報告卡生成成功！請長按螢幕截圖保存分享，解鎖今日幸運氣場！');
 }

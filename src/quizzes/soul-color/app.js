@@ -185,5 +185,5 @@ function handleRestart() {
 }
 
 function handleSaveResult() {
-  alert('✨ 測驗結果卡片已準備完畢！在手機瀏覽器中可長按畫面或截圖保存分享至小紅書！');
+  alert('✨ 測驗結果卡片已準備完畢！在手機瀏覽器中可長按畫面或截圖保存分享！');
 }

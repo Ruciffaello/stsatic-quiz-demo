@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0d111c">
+  <title>對象成分暨物種分析報告</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="bureau-mark" aria-hidden="true">異</div>
+      <div>
+        <p class="eyebrow">INTERDIMENSIONAL SPECIMEN BUREAU</p>
+        <p class="bureau-name">跨次元異種鑑定所</p>
+      </div>
+      <span class="case-number" id="case-number">CASE—0000</span>
+    </header>
+
+    <section class="screen active" id="intro-screen">
+      <div class="intro-visual" aria-hidden="true">
+        <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+        <div class="specimen-seal"><span>?</span></div>
+      </div>
+      <p class="kicker">戀愛對象異種血統檢測</p>
+      <h1>對象成分暨<br><em>物種分析報告</em></h1>
+      <p class="subtitle">根據牠在戀愛關係中的行為，<br>鑑定妳究竟在和什麼東西交往。</p>
+      <div class="notice">
+        <span>鑑定須知</span>
+        <p>本次鑑定共有 15 道情境題，約需 4–6 分鐘完成。請固定觀察同一位對象，依照牠「實際怎麼做」作答；本報告僅供娛樂及閨蜜研究使用。</p>
+      </div>
+      <button class="primary-btn" id="start-btn">提交行為樣本 <span>→</span></button>
+      <p class="meta">15 道情境採樣 · 約 4 分鐘 · 39 種異獸資料庫</p>
+    </section>
+
+    <section class="screen" id="quiz-screen">
+      <div class="progress-head">
+        <span id="progress-label">樣本採集 01 / 15</span>
+        <span id="progress-percent">7%</span>
+      </div>
+      <div class="progress-track"><div id="progress-bar"></div></div>
+      <div class="question-card">
+        <p class="question-group" id="question-group"></p>
+        <h2 id="question-text"></h2>
+        <div class="options" id="options"></div>
+      </div>
+      <button class="text-btn" id="back-btn">← 返回上一題</button>
+    </section>
+
+    <section class="screen" id="loading-screen">
+      <div class="scanner">
+        <div class="scan-ring"></div><div class="scan-core">DNA</div>
+      </div>
+      <p class="kicker">ANALYZING SPECIMEN</p>
+      <h2>正在比對異獸血統</h2>
+      <p class="loading-copy" id="loading-copy">檢查樣本是否具有正常人類反應……</p>
+      <div class="loading-track"><div></div></div>
+    </section>
+
+    <section class="screen" id="result-screen">
+      <article class="result-card" id="result-card">
+        <div class="report-head">
+          <div><p>SPECIMEN REPORT</p><strong>異種血統鑑定書</strong></div>
+          <span id="result-case"></span>
+        </div>
+        <div class="creature-placeholder" id="creature-placeholder">
+          <span id="creature-glyph">異</span>
+          <small>ILLUSTRATION PENDING</small>
+        </div>
+        <p class="result-label">主要鑑定物種</p>
+        <h2 id="result-name"></h2>
+        <p class="result-subtype" id="result-subtype"></p>
+        <div class="primary-percent"><strong id="primary-percent"></strong><span>血統吻合度</span></div>
+        <p class="result-summary" id="result-summary"></p>
+        <div class="components">
+          <p class="section-title">伴生血統成分</p>
+          <div id="component-list"></div>
+        </div>
+        <div class="traits">
+          <p class="section-title">行為樣本指標</p>
+          <div id="trait-list"></div>
+        </div>
+        <p class="fine-print">本結果為娛樂性行為側寫，成分比例代表相對匹配度，並非心理或醫療診斷。</p>
+      </article>
+      <div class="result-actions">
+        <button class="primary-btn" id="restart-btn">鑑定另一個對象</button>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

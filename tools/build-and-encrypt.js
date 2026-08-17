@@ -14,6 +14,8 @@ const config = require('./config.js');
 const rootDir = path.join(__dirname, '..');
 const srcDir = path.join(rootDir, 'src', 'quizzes');
 const releaseDir = path.join(rootDir, 'release', 'q');
+const hubSrcPath = path.join(rootDir, 'src', 'hub', 'index.html');
+const hubReleasePath = path.join(rootDir, 'release', 'index.html');
 
 console.log('🚀 開始執行全站心理測驗【DOMParser 穩定解密版】自動打包與加密流程...\n');
 
@@ -97,6 +99,14 @@ Object.keys(config).forEach(quizId => {
 
   console.log(`  ⚡ [${quizId}] 已完成極速加密與 DOMParser 解密優化！輸出：release/q/${quizId}/index.html`);
 });
+
+// 同步單一網域 Quiz Hub 首頁來源至 release，避免手動修改正式產物。
+if (fs.existsSync(hubSrcPath)) {
+  fs.copyFileSync(hubSrcPath, hubReleasePath);
+  console.log('  🏛️ Quiz Hub 首頁已同步：src/hub/index.html → release/index.html');
+} else {
+  console.warn(`⚠️ 警告：找不到 Hub 來源 ${hubSrcPath}，略過首頁同步。`);
+}
 
 console.log('\n🎉 所有測驗已成功完成打包！');
 
@@ -290,7 +300,7 @@ function generateFastUnlockTemplate(data) {
 
       } catch (err) {
         console.error(err);
-        errorEl.textContent = '⚠️ 解鎖卡密錯誤，請重新核對小紅書自動發貨訊息！';
+        errorEl.textContent = '⚠️ 解鎖卡密錯誤，請重新核對發貨訊息或輸入之卡密！';
         btnEl.disabled = false;
         btnEl.textContent = '${data.buttonText}';
       }

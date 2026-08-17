@@ -16,9 +16,9 @@ module.exports = {
   // ------------------------------------------------------------------
   "soul-color": {
     id: "soul-color",
-    title: "尋找你的靈魂氣質色 ｜ 小紅書專屬心理測驗",
-    passcode: "8888", // 小紅書自動發貨卡密
-    instructions: "請輸入您於小紅書下單取得的 4 位數專屬解鎖卡密（預設卡密：8888）",
+    title: "尋找你的靈魂氣質色 ｜ OnePage 心理測驗",
+    passcode: "8888", // 預設發貨卡密
+    instructions: "請輸入您的 4 位數專屬解鎖卡密（預設卡密：8888）",
     placeholder: "請輸入解鎖卡密",
     buttonText: "解鎖並開始測驗 ➔",
     themeColor: "#6c5ce7", // 主題配色
@@ -31,9 +31,9 @@ module.exports = {
   // ------------------------------------------------------------------
   "guardian-beast": {
     id: "guardian-beast",
-    title: "解鎖你的隱藏守護神獸 ｜ 小紅書專屬心理測驗",
-    passcode: "9999", // 小紅書自動發貨卡密
-    instructions: "請輸入您於小紅書下單取得的 4 位數專屬解鎖卡密（預設卡密：9999）",
+    title: "解鎖你的隱藏守護神獸 ｜ OnePage 心理測驗",
+    passcode: "9999", // 預設發貨卡密
+    instructions: "請輸入您的 4 位數專屬解鎖卡密（預設卡密：9999）",
     placeholder: "請輸入解鎖卡密",
     buttonText: "解鎖神獸測驗 ➔",
     themeColor: "#00cec9", // 主題配色
@@ -46,12 +46,27 @@ module.exports = {
   // ------------------------------------------------------------------
   "love-attachment": {
     id: "love-attachment",
-    title: "戀愛依戀類型與契合度診斷 ｜ 小紅書專屬心理測驗",
-    passcode: "7777", // 小紅書自動發貨卡密
-    instructions: "請輸入您於小紅書下單取得的 4 位數專屬解鎖卡密（預設卡密：7777）",
+    title: "戀愛依戀類型與契合度診斷 ｜ OnePage 心理測驗",
+    passcode: "7777", // 預設發貨卡密
+    instructions: "請輸入您的 4 位數專屬解鎖卡密（預設卡密：7777）",
     placeholder: "請輸入解鎖卡密",
     buttonText: "解鎖戀愛診斷 ➔",
     themeColor: "#ec4899", // 浪漫粉紫主題色
     bgStyle: "linear-gradient(135deg, #1e1b4b 0%, #31103f 50%, #4c0519 100%)",
+  },
+
+  // ------------------------------------------------------------------
+  // 測驗 04: 對象成分暨物種分析報告 (partner-species-report)
+  // 網址路徑: https://quiz.yourdomain.com/q/partner-species-report/
+  // ------------------------------------------------------------------
+  "partner-species-report": {
+    id: "partner-species-report",
+    title: "對象成分暨物種分析報告 ｜ OnePage 心理測驗",
+    passcode: "6666", // 原型預設卡密，正式發佈前可再調整
+    instructions: "請輸入您的 4 位數專屬解鎖卡密（原型卡密：6666）",
+    placeholder: "請輸入解鎖卡密",
+    buttonText: "解鎖並提交樣本 ➔",
+    themeColor: "#b89455",
+    bgStyle: "linear-gradient(135deg, #0d111c 0%, #14231f 55%, #251712 100%)",
   }
 };

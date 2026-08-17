@@ -1,12 +1,12 @@
 # ☁️ 騰訊雲 EdgeOne Pages (OnePage) 託管與部署指南
 
-本文件說明如何將本專案部署至**騰訊雲 EdgeOne Pages (OnePage 靜態託管)**，並透過國內 CDN 節點提供小紅書買家極速存取。
+本文件說明如何將本專案部署至**騰訊雲 EdgeOne Pages (靜態託管)**，並透過國內外頂級 CDN 節點提供全網極速存取。
 
 ---
 
 ## 📌 騰訊雲 EdgeOne Pages 與 GitHub Pages 的核心差異
 
-1. **國內存取極速**：EdgeOne 擁有中國大陸與全球 CDN 節點，小紅書買家開啟 H5 速度極快。
+1. **全球與國內存取極速**：EdgeOne 擁有中國大陸與全球 CDN 節點，買家在任何社群或通訊軟體內開啟 H5 速度極快。
 2. **託管機制**：EdgeOne Pages 直接連結您的 GitHub 倉庫 `main` 分支。在 EdgeOne 控制台設定 **「構建命令 (Build Command)」** 與 **「輸出目錄 (Output Directory)」** 後，每次 Git Push 騰訊雲就會自動編譯加密並部署！
 
 ---
@@ -33,6 +33,7 @@
 - 🌐 **全站門戶頁**：`https://<EdgeOne網域>.edgeone.app/` (自動讀取 `release/index.html`)
 - 🔒 **靈魂氣質色測驗 (卡密 8888)**：`https://<EdgeOne網域>.edgeone.app/q/soul-color/` (自動讀取 `release/q/soul-color/index.html`)
 - 🔒 **隱藏守護神獸測驗 (卡密 9999)**：`https://<EdgeOne網域>.edgeone.app/q/guardian-beast/` (自動讀取 `release/q/guardian-beast/index.html`)
+- 🔒 **戀愛依戀類型測驗 (卡密 7777)**：`https://<EdgeOne網域>.edgeone.app/q/love-attachment/` (自動讀取 `release/q/love-attachment/index.html`)
 
 ---
 
