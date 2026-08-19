@@ -1,6 +1,33 @@
+/*
+ * 《對象成分暨物種分析報告》主要程式
+ *
+ * 這個檔案可以分成四個區域：
+ * 1. 題目與答案資料
+ * 2. 物種資料
+ * 3. 畫面與作答流程
+ * 4. 分析、排名與結果輸出
+ *
+ * 本測驗完全在瀏覽器中運算，不會把答案傳送到伺服器。
+ */
+
+// 十個分析維度的英文代碼。使用短代碼可讓題目資料保持精簡。
 const DIMS=['EM','CO','ST','RE','RC','BO','SR','RP','AC','IN'];
+
+// 結果頁需要顯示中文，因此另外建立「代碼 → 中文名稱」對照表。
 const DIM_NAMES={EM:'情緒感知',CO:'溝通能力',ST:'穩定程度',RE:'責任承擔',RC:'雙向回饋',BO:'界線尊重',SR:'情緒調節',RP:'反省修復',AC:'行動能力',IN:'真實一致'};
+
+/**
+ * 建立一個答案選項。
+ * @param {string} text 選項顯示文字
+ * @param {Object} d 維度加減分，例如 { EM: 2, CO: 1 }
+ * @param {string[]} t 行為標籤，例如 ['主動照顧', '尊重界線']
+ * @returns {{text:string, d:Object, t:string[]}}
+ *
+ * 箭頭函式 `=>` 是函式的簡寫；`d={}` 代表沒有傳入時使用空物件。
+ */
 const opt=(text,d={},t=[])=>({text,d,t});
+
+// 題目資料：g = 題組、q = 題目、o = options（選項陣列）。
 const questions=[
  {g:'情緒與陪伴',q:'當妳明顯心情不好，卻還沒有主動說明原因時，牠通常會……',o:[
   opt('很快察覺不對勁，先陪在旁邊，再問妳現在想說話、想抱抱，還是想安靜一下。',{EM:2,CO:1,BO:1},['主動照顧','尊重界線']),
@@ -94,7 +121,14 @@ const questions=[
   opt('追求期幾乎完美，確定妳不容易離開後，尊重、耐心與投入都明顯下降。',{IN:-2,BO:-1,RC:-2},['擬態','只進不出'])]}
 ];
 
+/**
+ * 建立物種資料物件。S 是 Species 的縮寫。
+ * target 是物種偏好的維度方向：1 = 高、0 = 中、-1 = 低。
+ * tags 是判定該物種時最重要的行為標籤。
+ */
 const S=(name,subtype,glyph,target,tags,summary,note)=>({name,subtype,glyph,target,tags,summary,note});
+
+// 39 種主要異獸資料。普通人類與獨角獸採特殊門檻，會在 analyze() 中加入。
 const species=[
  S('哥布林','關係資源搜刮型','哥',{RC:-1,RE:-1,BO:-1},['只進不出','斤斤計較'],'牠對關係資源有敏銳嗅覺，擅長接收照顧、便利與好處；至於回補，通常要等庫存非常充足。','鑑定所清點後發現，樣本口袋裡有三次順風車、七頓晚餐，以及一句尚未兌現的「下次換我」。'),
  S('地精','精密計算型','精',{AC:1,RC:-1,EM:-1},['斤斤計較','單一視角'],'牠精明、能處理細節，也很清楚每一份投入的成本。問題是關係有時會被牠經營得像一張試算表。','樣本並非不浪漫，只是浪漫必須先通過成本效益分析。'),
@@ -137,24 +171,464 @@ const species=[
  S('九頭蛇','問題增殖型','蛇',{RP:-1,RE:-1,SR:-1},['問題再生','多重版本'],'每當一個問題看似被處理，原處就可能長出兩個功能相似的新問題。根源仍安全地保存在最深處。','本所砍掉一項問題後，工作量增加了一倍。')
 ];
 
-const state={index:0,answers:Array(questions.length).fill(null),caseId:''};
+// -----------------------------------------------------------------------------
+// 作答狀態與畫面流程
+// -----------------------------------------------------------------------------
+
+// state 用來保存「會隨遊戲過程改變的資料」。
+const state={
+ index:0,
+ answers:Array(questions.length).fill(null), // null 表示尚未回答或選擇略過
+ caseId:''
+};
+
+// 常用的 DOM 查找簡寫：$('start-btn') 等同 document.getElementById('start-btn')。
 const $=id=>document.getElementById(id);
-function makeCase(){return `CASE—${Math.floor(1000+Math.random()*9000)}`}
-function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
-function start(){state.index=0;state.answers.fill(null);state.caseId=makeCase();$('case-number').textContent=state.caseId;renderQuestion();show('quiz-screen')}
-function renderQuestion(){const q=questions[state.index],pct=Math.round((state.index+1)/questions.length*100);$('progress-label').textContent=`樣本採集 ${String(state.index+1).padStart(2,'0')} / ${questions.length}`;$('progress-percent').textContent=`${pct}%`;$('progress-bar').style.width=`${pct}%`;$('question-group').textContent=`SECTION ${Math.floor(state.index/3)+1} · ${q.g}`;$('question-text').textContent=q.q;$('options').innerHTML='';[...q.o,{text:'沒遇過／無法判斷',skip:true}].forEach((o,i)=>{const b=document.createElement('button');b.className=`option${o.skip?' skip':''}`;b.innerHTML=`<span class="option-code">${String.fromCharCode(65+i)}</span><span>${o.text}</span>`;b.onclick=()=>choose(i);$('options').appendChild(b)});$('back-btn').style.visibility=state.index?'visible':'hidden'}
-function choose(i){state.answers[state.index]=i<5?i:null;if(state.index<questions.length-1){state.index++;renderQuestion();window.scrollTo({top:0,behavior:'smooth'})}else{beginAnalysis()}}
-function back(){if(!state.index)return;state.index--;renderQuestion()}
-function beginAnalysis(){show('loading-screen');const lines=['檢查樣本是否具有正常人類反應……','比對地底、深海與不死生物資料……','確認承諾是否具有實體……','計算伴生血統與異常濃度……'];let i=0;$('loading-copy').textContent=lines[0];const timer=setInterval(()=>{$('loading-copy').textContent=lines[++i%lines.length]},650);setTimeout(()=>{clearInterval(timer);renderResult(analyze())},2850)}
-function analyze(){const raw=Object.fromEntries(DIMS.map(k=>[k,0])),cap=Object.fromEntries(DIMS.map(k=>[k,0])),tagQuestions={};let valid=0;state.answers.forEach((a,qi)=>{if(a===null)return;valid++;const chosen=questions[qi].o[a];DIMS.forEach(k=>{const max=Math.max(...questions[qi].o.map(x=>Math.abs(x.d[k]||0)));if(max)cap[k]+=max;raw[k]+=chosen.d[k]||0});chosen.t.forEach(t=>{tagQuestions[t]??=new Set();tagQuestions[t].add(qi)})});const norm={},scores100={};DIMS.forEach(k=>{norm[k]=cap[k]?Math.max(-1,Math.min(1,raw[k]/cap[k])):0;scores100[k]=Math.round(50+norm[k]*50)});let ranked=species.map(s=>{const keys=Object.keys(s.target);const dim=keys.reduce((sum,k)=>sum+(1-Math.abs(norm[k]-s.target[k])/2),0)/keys.length;const tagHits=s.tags.map(t=>Math.min(2,tagQuestions[t]?.size||0));const tag=tagHits.reduce((a,b)=>a+b,0)/(s.tags.length*2);const evidence=new Set();s.tags.forEach(t=>tagQuestions[t]?.forEach(q=>evidence.add(q)));return{...s,score:dim*.6+tag*.4,evidence:evidence.size}}).filter(x=>x.evidence>=2);
- const ordinaryGate=valid>=12&&['RP','BO','RE'].every(k=>scores100[k]>=50)&&DIMS.filter(k=>scores100[k]>=45).length>=7;
- if(ordinaryGate)ranked.push({...S('普通人類','基礎成熟型','人',{},[],'會犯錯、偶爾遲鈍，但具備基本溝通、責任與改善能力。沒有千年詛咒，也沒有深海觸手。','只是一個願意好好相處的人；在本資料庫中已經相當罕見。'),score:.79,evidence:valid});
- const unicornGate=valid>=14&&['EM','CO','ST','RE','RC','BO','RP'].every(k=>scores100[k]>=70)&&DIMS.every(k=>scores100[k]>=55)&&scores100.IN>=85;
- if(unicornGate)ranked.push({...S('獨角獸','高純度共感型','角',{},[],'成熟、誠實、尊重界線，而且願意穩定溝通。現有目擊資料過少，仍需複驗。','本所已要求重新採樣，不排除資料由熱戀期提供。'),score:.96,evidence:valid});
- ranked.sort((a,b)=>b.score-a.score);if(!ranked.length)ranked=species.slice(0,3).map((x,i)=>({...x,score:.5-i*.05,evidence:2}));const top=ranked.slice(0,3);let ex=top.map(x=>Math.exp(x.score*4)),sum=ex.reduce((a,b)=>a+b,0),p=ex.map(x=>Math.round(x/sum*100));let diff=100-p.reduce((a,b)=>a+b,0);p[0]+=diff;if(p[0]<45){const take=45-p[0],rest=p[1]+p[2];p[0]=45;p[1]-=Math.round(take*p[1]/rest);p[2]=100-p[0]-p[1]}return{top:top.map((x,i)=>({...x,percent:p[i]})),scores:scores100}}
+
+/** 產生四位數的報告編號。 */
+function makeCase(){
+ return `CASE—${Math.floor(1000+Math.random()*9000)}`;
+}
+
+/**
+ * 切換畫面。
+ * 先隱藏所有 .screen，再顯示指定 id 的畫面。
+ */
+function show(id){
+ document.querySelectorAll('.screen').forEach(screen=>{
+  screen.classList.remove('active');
+ });
+ $(id).classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/** 開始或重新開始測驗。 */
+function start(){
+ state.index=0;
+ state.answers.fill(null);
+ state.caseId=makeCase();
+ $('case-number').textContent=state.caseId;
+ renderQuestion();
+ show('quiz-screen');
+}
+
+/** 把目前題目與選項渲染到 HTML。 */
+function renderQuestion(){
+ const question=questions[state.index];
+ const percent=Math.round((state.index+1)/questions.length*100);
+
+ $('progress-label').textContent=`樣本採集 ${String(state.index+1).padStart(2,'0')} / ${questions.length}`;
+ $('progress-percent').textContent=`${percent}%`;
+ $('progress-bar').style.width=`${percent}%`;
+ $('question-group').textContent=`SECTION ${Math.floor(state.index/3)+1} · ${question.g}`;
+ $('question-text').textContent=question.q;
+ $('options').innerHTML='';
+
+ // 展開運算子 `...` 把原本五個選項複製進新陣列，再加上略過選項。
+ const displayOptions=[...question.o,{text:'沒遇過／無法判斷',skip:true}];
+
+ displayOptions.forEach((option,index)=>{
+  const button=document.createElement('button');
+  button.className=`option${option.skip?' skip':''}`;
+  button.innerHTML=`<span class="option-code">${String.fromCharCode(65+index)}</span><span>${option.text}</span>`;
+  button.onclick=()=>choose(index);
+  $('options').appendChild(button);
+ });
+
+ $('back-btn').style.visibility=state.index?'visible':'hidden';
+}
+
+/** 儲存答案，然後前往下一題或開始分析。 */
+function choose(optionIndex){
+ // 前五項是有效答案；第六項「無法判斷」存成 null。
+ state.answers[state.index]=optionIndex<5?optionIndex:null;
+
+ if(state.index<questions.length-1){
+  state.index++;
+  renderQuestion();
+  window.scrollTo({top:0,behavior:'smooth'});
+ }else{
+  beginAnalysis();
+ }
+}
+
+/** 返回上一題；第一題時直接結束函式。 */
+function back(){
+ if(!state.index)return;
+ state.index--;
+ renderQuestion();
+}
+
+/** 顯示分析動畫，完成後呼叫 analyze()。 */
+function beginAnalysis(){
+ show('loading-screen');
+
+ const lines=[
+  '檢查樣本是否具有正常人類反應……',
+  '比對地底、深海與不死生物資料……',
+  '確認承諾是否具有實體……',
+  '計算伴生血統與異常濃度……'
+ ];
+ let lineIndex=0;
+
+ $('loading-copy').textContent=lines[0];
+ const timer=setInterval(()=>{
+  lineIndex=(lineIndex+1)%lines.length;
+  $('loading-copy').textContent=lines[lineIndex];
+ },650);
+
+ setTimeout(()=>{
+  clearInterval(timer);
+  renderResult(analyze());
+ },2850);
+}
+
+// -----------------------------------------------------------------------------
+// 分析演算法
+// -----------------------------------------------------------------------------
+
+/*
+ * ========================== 計分公式導讀 ==========================
+ *
+ * 本測驗不是「某個選項直接等於某種生物」，而是分成五個步驟：
+ *
+ * 第一步：累積原始維度分數 raw
+ * ------------------------------------------------------------
+ * 每個答案會對部分維度加減分，例如：
+ *
+ *   { EM: 2, CO: 1, BO: 1 }
+ *
+ * 代表：情緒感知 +2、溝通能力 +1、界線尊重 +1。
+ * 如果 15 題中有多題影響 EM，就把所有 EM 加減分相加。
+ *
+ *   raw.EM = 第 1 題 EM + 第 2 題 EM + ...
+ *
+ * 第二步：用 cap 正規化成 -1～1
+ * ------------------------------------------------------------
+ * 不同維度被題目觀察的次數不同，不能直接比較原始總分。
+ * cap 代表使用者實際回答的題目中，某維度可出現的最大絕對分數總和。
+ *
+ *   normalized = raw / cap
+ *
+ * 假設 EM 的 raw = 6、cap = 10：
+ *
+ *   normalized.EM = 6 / 10 = 0.6
+ *
+ * normalized 最後會被限制在 -1～1：
+ *
+ *   -1 = 非常低
+ *    0 = 中間
+ *    1 = 非常高
+ *
+ * 第三步：轉換成結果頁的 0～100
+ * ------------------------------------------------------------
+ * 結果頁比 -1～1 更適合顯示百分制，因此使用：
+ *
+ *   score100 = round(50 + normalized * 50)
+ *
+ * 範例：
+ *
+ *   normalized = -1   → 0 分
+ *   normalized =  0   → 50 分
+ *   normalized =  0.6 → 80 分
+ *   normalized =  1   → 100 分
+ *
+ * 第四步：計算使用者和每個物種的相似度
+ * ------------------------------------------------------------
+ * 物種 target 使用 -1、0、1 表示理想特徵。
+ * 例如木乃伊的情緒感知 EM = -1，表示木乃伊偏低情緒感知。
+ *
+ * 單一維度相似度公式：
+ *
+ *   similarity = 1 - abs(userValue - targetValue) / 2
+ *
+ * userValue 和 targetValue 都在 -1～1，所以最大距離為 2。
+ *
+ * 範例 A：使用者 EM = -0.8，木乃伊 target.EM = -1
+ *
+ *   distance   = abs(-0.8 - -1) = 0.2
+ *   similarity = 1 - 0.2 / 2 = 0.9
+ *
+ * 代表此維度有 90% 相似。
+ *
+ * 範例 B：使用者 EM = 1，木乃伊 target.EM = -1
+ *
+ *   distance   = abs(1 - -1) = 2
+ *   similarity = 1 - 2 / 2 = 0
+ *
+ * 代表完全相反。
+ *
+ * 所有關鍵維度的相似度取平均，得到 dimensionScore。
+ * 標籤則計算命中次數，得到 tagScore。每個標籤最多算兩題，
+ * 避免同一種行為重複太多次後壓過其他資訊。
+ *
+ * 最終物種分數：
+ *
+ *   finalScore = dimensionScore * 0.6 + tagScore * 0.4
+ *
+ * 也就是：
+ *   60% 來自整體行為維度
+ *   40% 來自具有辨識度的具體行為標籤
+ *
+ * 第五步：使用 Softmax 轉換前三名百分比
+ * ------------------------------------------------------------
+ * 相似度分數可能是：
+ *
+ *   木乃伊 0.82、天狗 0.75、貔貅 0.70
+ *
+ * 它們本身不是百分比，不能直接顯示，所以先做：
+ *
+ *   weight = exp(score * 4)
+ *
+ * 再計算：
+ *
+ *   percentage = weight / 所有 weight 的總和 * 100
+ *
+ * exp() 會放大分數差距，乘以 4 是「溫度調整」，讓第一名更突出。
+ * 如果不乘以 4，三個結果通常會過度接近 33%、33%、34%。
+ * 最後還會確保主要物種至少為 45%，讓報告具有清楚主次。
+ *
+ * ====================== 使用的 JavaScript 數學函式 ======================
+ *
+ * Math.abs(number)
+ *   取得絕對值。Math.abs(-3) 會得到 3。
+ *   此處用來計算兩個分數之間的「距離」，不在乎正負方向。
+ *
+ * Math.max(a, b, ...)
+ *   取得最大值。Math.max(1, 5, 2) 會得到 5。
+ *   此處用來找一道題在某維度可能出現的最大絕對分數。
+ *
+ * Math.min(a, b, ...)
+ *   取得最小值。Math.min(1, 5, 2) 會得到 1。
+ *   此處用來限制每個標籤最多只計兩次。
+ *
+ * Math.round(number)
+ *   四捨五入成整數。Math.round(79.6) 會得到 80。
+ *   此處用於結果頁指標和成分百分比。
+ *
+ * Math.exp(number)
+ *   計算自然常數 e 的 number 次方。
+ *   Math.exp(1) 約為 2.718；是 Softmax 的核心函式。
+ *
+ * Math.random()
+ *   產生 0（包含）到 1（不包含）的隨機小數。
+ *   本測驗只用它產生 CASE 報告編號，不用它決定測驗結果。
+ *
+ * Math.floor(number)
+ *   無條件捨去小數。Math.floor(3.9) 會得到 3。
+ *   此處用來產生整數報告編號，以及計算題目所屬區段。
+ *
+ * 注意：Math.max(...array) 中的 `...` 是展開運算子，
+ * 它會把 [1, 5, 2] 展開成 Math.max(1, 5, 2)。
+ *
+ * =================================================================
+ */
+
+/**
+ * 分析所有答案。
+ * @returns {{top:Object[], scores:Object}}
+ * top 是前三名物種；scores 是十項 0～100 的行為指標。
+ */
+function analyze(){
+ // Object.fromEntries() 把 [['EM',0], ['CO',0]] 轉成 {EM:0, CO:0}。
+ const raw=Object.fromEntries(DIMS.map(key=>[key,0]));
+ const cap=Object.fromEntries(DIMS.map(key=>[key,0]));
+ const tagQuestions={};
+ let validAnswers=0;
+
+ // 第一階段：累積維度分數與標籤證據。
+ state.answers.forEach((answerIndex,questionIndex)=>{
+  if(answerIndex===null)return;
+
+  validAnswers++;
+  const question=questions[questionIndex];
+  const chosen=question.o[answerIndex];
+
+  DIMS.forEach(key=>{
+   // 找出該題在此維度可能出現的最大絕對分數，供稍後正規化。
+   // 先把每個答案轉成絕對值陣列，再用 Math.max() 取最大值。
+   // 例如 [2, 0, 1, -2, -2] → [2, 0, 1, 2, 2] → 最大值 2。
+   const questionCap=Math.max(...question.o.map(answer=>Math.abs(answer.d[key]||0)));
+   if(questionCap)cap[key]+=questionCap;
+   raw[key]+=chosen.d[key]||0;
+  });
+
+  chosen.t.forEach(tag=>{
+   // `??=` 表示：左邊是 null/undefined 時，才指定右邊的新 Set。
+   tagQuestions[tag]??=new Set();
+   tagQuestions[tag].add(questionIndex);
+  });
+ });
+
+ // 第二階段：把原始分數轉成 -1～1，以及結果頁使用的 0～100。
+ const normalized={};
+ const scores100={};
+ DIMS.forEach(key=>{
+  // Math.min(1, value) 限制上界；Math.max(-1, ...) 再限制下界。
+  // 這種寫法通常稱為 clamp（夾住數值範圍）。
+  normalized[key]=cap[key]
+   ?Math.max(-1,Math.min(1,raw[key]/cap[key]))
+   :0;
+  // 使用 Math.round() 將可能帶小數的結果四捨五入。
+  scores100[key]=Math.round(50+normalized[key]*50);
+ });
+
+ // 第三階段：計算每個物種的相似度。
+ let ranked=species.map(creature=>{
+  const dimensionKeys=Object.keys(creature.target);
+
+  // 維度越接近物種 target，dimensionScore 越接近 1。
+  const dimensionScore=dimensionKeys.reduce((sum,key)=>{
+   // Math.abs() 取得使用者值和物種目標值之間的絕對距離。
+   const distance=Math.abs(normalized[key]-creature.target[key]);
+   return sum+(1-distance/2);
+  },0)/dimensionKeys.length;
+
+  // 每個標籤最多計兩次，防止單一特徵壓過所有維度。
+  // Math.min(2, 次數) 將每個標籤的有效次數封頂在 2。
+  const tagHits=creature.tags.map(tag=>Math.min(2,tagQuestions[tag]?.size||0));
+  const tagScore=tagHits.reduce((sum,value)=>sum+value,0)/(creature.tags.length*2);
+
+  // evidence 計算證據來自幾道不同題目。
+  const evidenceQuestions=new Set();
+  creature.tags.forEach(tag=>{
+   tagQuestions[tag]?.forEach(questionIndex=>evidenceQuestions.add(questionIndex));
+  });
+
+  return{
+   ...creature,
+   score:dimensionScore*.6+tagScore*.4,
+   evidence:evidenceQuestions.size
+  };
+ }).filter(creature=>creature.evidence>=2);
+
+ // 普通人類必須有足夠題數，且整體不能出現太多明顯低分。
+ const ordinaryGate=
+  validAnswers>=12&&
+  ['RP','BO','RE'].every(key=>scores100[key]>=50)&&
+  DIMS.filter(key=>scores100[key]>=45).length>=7;
+
+ if(ordinaryGate){
+  ranked.push({
+   ...S('普通人類','基礎成熟型','人',{},[],
+    '會犯錯、偶爾遲鈍，但具備基本溝通、責任與改善能力。沒有千年詛咒，也沒有深海觸手。',
+    '只是一個願意好好相處的人；在本資料庫中已經相當罕見。'),
+   score:.79,
+   evidence:validAnswers
+  });
+ }
+
+ // 獨角獸是隱藏結果，只有全面高分且答案足夠完整才會加入排名。
+ const unicornGate=
+  validAnswers>=14&&
+  ['EM','CO','ST','RE','RC','BO','RP'].every(key=>scores100[key]>=70)&&
+  DIMS.every(key=>scores100[key]>=55)&&
+  scores100.IN>=85;
+
+ if(unicornGate){
+  ranked.push({
+   ...S('獨角獸','高純度共感型','角',{},[],
+    '成熟、誠實、尊重界線，而且願意穩定溝通。現有目擊資料過少，仍需複驗。',
+    '本所已要求重新採樣，不排除資料由熱戀期提供。'),
+   score:.96,
+   evidence:validAnswers
+  });
+ }
+
+ // 分數由高到低排序。sort 的比較函式回傳負值時，b 會排在 a 前面。
+ ranked.sort((a,b)=>b.score-a.score);
+
+ // 理論上的保底；正常作答幾乎不會進入這個分支。
+ if(!ranked.length){
+  ranked=species.slice(0,3).map((creature,index)=>({
+   ...creature,
+   score:.5-index*.05,
+   evidence:2
+  }));
+ }
+
+ const top=ranked.slice(0,3);
+
+ // Softmax 將三個相似度轉成合計 100% 的相對比例。
+ // Math.exp() 將線性相似度轉成指數權重，讓高分結果更突出。
+ const exponentials=top.map(creature=>Math.exp(creature.score*4));
+ const exponentialSum=exponentials.reduce((sum,value)=>sum+value,0);
+ const percentages=exponentials.map(value=>Math.round(value/exponentialSum*100));
+
+ // 四捨五入後可能不是剛好 100，將誤差補到主要物種。
+ const roundingDifference=100-percentages.reduce((sum,value)=>sum+value,0);
+ percentages[0]+=roundingDifference;
+
+ // 確保主要物種至少 45%，讓結果有清楚的主次。
+ if(percentages[0]<45){
+  const amountNeeded=45-percentages[0];
+  const companionTotal=percentages[1]+percentages[2];
+  percentages[0]=45;
+  percentages[1]-=Math.round(amountNeeded*percentages[1]/companionTotal);
+  percentages[2]=100-percentages[0]-percentages[1];
+ }
+
+ return{
+  top:top.map((creature,index)=>({...creature,percent:percentages[index]})),
+  scores:scores100
+ };
+}
+
+/** 伴生血統只取主說明的第一句，不顯示調侃。 */
 function companionIntro(item){
  const firstSentence=item.summary.match(/^.*?[。！？]/)?.[0]||item.summary;
  return firstSentence.replace(/；.*$/,'。');
 }
-function renderResult(r){const [main,...others]=r.top;$('result-case').textContent=state.caseId;$('result-name').textContent=main.name;$('result-subtype').textContent=main.subtype;$('creature-glyph').textContent=main.glyph;$('primary-percent').textContent=`${main.percent}%`;$('result-summary').textContent=`${main.summary} ${main.note}`;$('component-list').innerHTML=others.map(x=>`<div class="component-row"><div class="component-head"><span>${x.name}</span><div class="component-bar"><i style="width:${x.percent}%"></i></div><strong>${x.percent}%</strong></div><p class="component-intro">${companionIntro(x)}</p></div>`).join('');const traits=Object.entries(r.scores).sort((a,b)=>Math.abs(b[1]-50)-Math.abs(a[1]-50)).slice(0,5);$('trait-list').innerHTML=traits.map(([k,v])=>`<div class="trait-row"><span>${DIM_NAMES[k]}</span><div class="trait-bar"><i style="width:${v}%"></i></div><strong>${v}</strong></div>`).join('');show('result-screen')}
-$('start-btn').addEventListener('click',start);$('back-btn').addEventListener('click',back);$('restart-btn').addEventListener('click',start);state.caseId=makeCase();$('case-number').textContent=state.caseId;
+
+/** 將分析結果寫入結果頁。 */
+function renderResult(result){
+ // 陣列解構：第一名放進 main，其餘項目組成 companions 陣列。
+ const [main,...companions]=result.top;
+
+ $('result-case').textContent=state.caseId;
+ $('result-name').textContent=main.name;
+ $('result-subtype').textContent=main.subtype;
+ $('creature-glyph').textContent=main.glyph;
+ $('primary-percent').textContent=`${main.percent}%`;
+ $('result-summary').textContent=`${main.summary} ${main.note}`;
+
+ // map() 產生每張伴生血統卡，再用 join('') 合併成 HTML 字串。
+ $('component-list').innerHTML=companions.map(creature=>`
+  <div class="component-row">
+   <div class="component-head">
+    <span>${creature.name}</span>
+    <div class="component-bar"><i style="width:${creature.percent}%"></i></div>
+    <strong>${creature.percent}%</strong>
+   </div>
+   <p class="component-intro">${companionIntro(creature)}</p>
+  </div>
+ `).join('');
+
+ // 顯示偏離中間值 50 最大的五項指標，讓結果更有辨識度。
+ const traits=Object.entries(result.scores)
+  .sort((a,b)=>Math.abs(b[1]-50)-Math.abs(a[1]-50))
+  .slice(0,5);
+
+ $('trait-list').innerHTML=traits.map(([key,value])=>`
+  <div class="trait-row">
+   <span>${DIM_NAMES[key]}</span>
+   <div class="trait-bar"><i style="width:${value}%"></i></div>
+   <strong>${value}</strong>
+  </div>
+ `).join('');
+
+ show('result-screen');
+}
+
+// -----------------------------------------------------------------------------
+// 事件綁定與初始化
+// -----------------------------------------------------------------------------
+
+// addEventListener() 會在按鈕被點擊時執行指定函式。
+$('start-btn').addEventListener('click',start);
+$('back-btn').addEventListener('click',back);
+$('restart-btn').addEventListener('click',start);
+
+// 頁面首次載入時先產生一個報告編號。
+state.caseId=makeCase();
+$('case-number').textContent=state.caseId;

@@ -31,14 +31,18 @@ OnePage心理測驗開發/
 │   └── quizzes/                   # 各心理測驗開發源碼
 │       ├── soul-color/            # 測驗 01: 尋找你的靈魂氣質色
 │       ├── guardian-beast/        # 測驗 02: 解鎖隱藏守護神獸
-│       └── love-attachment/       # 測驗 03: 戀愛依戀類型與契合度診斷
+│       ├── love-attachment/       # 測驗 03: 戀愛依戀類型與契合度診斷
+│       ├── partner-species-report/# 測驗 04: 對象成分暨物種分析報告
+│       └── qixi-love-quiz/        # 測驗 05: 七夕戀愛依附型診斷 (ECR-S 12題)
 │
 ├── release/                       # 🚀 正式發佈資料夾 (部署至 GitHub Pages / 雲端託管)
 │   ├── index.html                 # 全站旗艦門戶頁 (Quiz Hub)
 │   └── q/                         # 心理測驗線上路徑 (子目錄)
 │       ├── soul-color/            # 🔒 加密後之靈魂色彩測驗頁面
 │       ├── guardian-beast/        # 🔒 加密後之守護神獸測驗頁面
-│       └── love-attachment/       # 🔒 加密後之戀愛依戀測驗頁面
+│       ├── love-attachment/       # 🔒 加密後之戀愛依戀測驗頁面
+│       ├── partner-species-report/# 🔒 加密後之物種分析測驗頁面
+│       └── qixi-love-quiz/        # 🔒 加密後之七夕戀愛依附測驗頁面
 │
 └── tools/                         # 🛠️ 自動化打包與加密工具
     ├── config.js                  # ⚠️ 測驗登錄設定檔 (新增測驗時必修改此處!)

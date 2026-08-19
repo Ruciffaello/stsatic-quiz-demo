@@ -68,5 +68,20 @@ module.exports = {
     buttonText: "解鎖並提交樣本 ➔",
     themeColor: "#b89455",
     bgStyle: "linear-gradient(135deg, #0d111c 0%, #14231f 55%, #251712 100%)",
+  },
+
+  // ------------------------------------------------------------------
+  // 測驗 05: 七夕戀愛依附型診斷 (qixi-love-quiz)
+  // 網址路徑: https://quiz.yourdomain.com/q/qixi-love-quiz/
+  // ------------------------------------------------------------------
+  "qixi-love-quiz": {
+    id: "qixi-love-quiz",
+    title: "七夕戀愛依附型診斷 ｜ OnePage 心理測驗",
+    passcode: "5277", // 預設發貨卡密
+    instructions: "請輸入您的 4 位數專屬解鎖卡密（預設卡密：5277）",
+    placeholder: "請輸入解鎖卡密",
+    buttonText: "解鎖七夕戀愛診斷 ➔",
+    themeColor: "#ff4d6d", // 甜美浪漫草莓玫瑰粉
+    bgStyle: "linear-gradient(140deg, #2d123b 0%, #4c184c 32%, #6b1d52 65%, #38123e 100%)",
   }
 };
