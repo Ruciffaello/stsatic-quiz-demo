@@ -23,7 +23,9 @@ OnePage心理測驗開發/
 │   └── quizzes/                   # 各心理測驗開發源碼
 │       ├── soul-color/            # 測驗 01: 尋找你的靈魂氣質色 (index.html, style.css, app.js)
 │       ├── guardian-beast/        # 測驗 02: 解鎖隱藏守護神獸 (index.html, style.css, app.js)
-│       └── love-attachment/       # 測驗 03: 戀愛依戀類型與契合度 (index.html, style.css, app.js)
+│       ├── love-attachment/       # 測驗 03: 戀愛依戀類型與契合度 (index.html, style.css, app.js)
+│       ├── partner-species-report/# 測驗 04: 對象成分暨物種分析報告 (index.html, style.css, app.js)
+│       └── qixi-love-quiz/        # 測驗 05: 七夕戀愛依附型診斷 (index.html, style.css, app.js)
 │
 ├── release/                       # 🚀 正式發佈資料夾 (部署至 GitHub Pages / 雲端託管)
 │   ├── index.html                 # 旗艦門戶頁 (Quiz Hub / 展示頁)
@@ -32,7 +34,11 @@ OnePage心理測驗開發/
 │       │   └── index.html         # 🔒 縫合 CSS/JS 並加密之單一獨立 HTML
 │       ├── guardian-beast/
 │       │   └── index.html         # 🔒 縫合 CSS/JS 並加密之單一獨立 HTML
-│       └── love-attachment/
+│       ├── love-attachment/
+│       │   └── index.html         # 🔒 縫合 CSS/JS 並加密之單一獨立 HTML
+│       ├── partner-species-report/
+│       │   └── index.html         # 🔒 縫合 CSS/JS 並加密之單一獨立 HTML
+│       └── qixi-love-quiz/
 │           └── index.html         # 🔒 縫合 CSS/JS 並加密之單一獨立 HTML
 │
 └── tools/                         # 🛠️ 自動化打包與加密腳本
@@ -48,10 +54,12 @@ OnePage心理測驗開發/
 
 | 專案發佈檔案 | 線上 URL | 頁面用途與情境 |
 |---|---|---|
-| `release/index.html` | `https://quiz.yourdomain.com/` | 全站門戶展示頁 / 品牌入口 |
+| `release/index.html` | `https://quiz.yourdomain.com/` | 全站門戶展示頁 / 品牌入口 (Quiz Hub) |
 | `release/q/soul-color/index.html` | `https://quiz.yourdomain.com/q/soul-color/` | 🔒 靈魂氣質色測驗 (解鎖卡密：8888) |
 | `release/q/guardian-beast/index.html` | `https://quiz.yourdomain.com/q/guardian-beast/` | 🔒 守護神獸測驗 (解鎖卡密：9999) |
 | `release/q/love-attachment/index.html` | `https://quiz.yourdomain.com/q/love-attachment/` | 🔒 戀愛依戀類型測驗 (解鎖卡密：7777) |
+| `release/q/partner-species-report/index.html` | `https://quiz.yourdomain.com/q/partner-species-report/` | 🔒 對象成分物種分析 (解鎖卡密：6666) |
+| `release/q/qixi-love-quiz/index.html` | `https://quiz.yourdomain.com/q/qixi-love-quiz/` | 🔒 七夕戀愛依附診斷 (解鎖卡密：5277) |
 
 ---
 

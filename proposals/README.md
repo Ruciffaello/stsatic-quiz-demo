@@ -27,6 +27,14 @@ proposals/
 │   ├── PROPOSAL.md
 │   └── DESIGN.md
 │
+├── partner-species-report/        # 測驗 04: 對象成分暨物種分析報告 (企劃與設計存檔)
+│   ├── PROPOSAL.md
+│   └── DESIGN.md
+│
+├── qixi-love-quiz/                # 測驗 05: 七夕戀愛依附型診斷 (企劃與設計存檔)
+│   ├── PROPOSAL.md
+│   └── DESIGN.md
+│
 └── [new-quiz-id]/                 # ➕ 新增提案...
     ├── PROPOSAL.md
     └── DESIGN.md
