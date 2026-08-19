@@ -83,5 +83,20 @@ module.exports = {
     buttonText: "解鎖七夕戀愛診斷 ➔",
     themeColor: "#ff4d6d", // 甜美浪漫草莓玫瑰粉
     bgStyle: "linear-gradient(140deg, #2d123b 0%, #4c184c 32%, #6b1d52 65%, #38123e 100%)",
+  },
+
+  // ------------------------------------------------------------------
+  // Quiz 06: English Love Attachment Style Quiz (qixi-love-quiz-en)
+  // URL: https://quiz.yourdomain.com/q/qixi-love-quiz-en/
+  // ------------------------------------------------------------------
+  "qixi-love-quiz-en": {
+    id: "qixi-love-quiz-en",
+    title: "Love Attachment Style Quiz | OnePage",
+    passcode: "5277",
+    instructions: "Enter your 4-digit access code (demo code: 5277)",
+    placeholder: "Enter access code",
+    buttonText: "Unlock the Love Attachment Quiz ➔",
+    themeColor: "#ff4d6d",
+    bgStyle: "linear-gradient(140deg, #2d123b 0%, #4c184c 32%, #6b1d52 65%, #38123e 100%)",
   }
 };

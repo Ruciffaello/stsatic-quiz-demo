@@ -15,7 +15,10 @@ OnePage心理測驗開發/
 │   ├── _TEMPLATE/                 # 📋 提案公版範本 (PROPOSAL.md & DESIGN.md)
 │   ├── soul-color/                # 測驗 01 企劃與設計檔
 │   ├── guardian-beast/            # 測驗 02 企劃與設計檔
-│   └── love-attachment/           # 測驗 03 企劃與設計檔
+│   ├── love-attachment/           # 測驗 03 企劃與設計檔
+│   ├── partner-species-report/    # 測驗 04 企劃與設計檔
+│   ├── qixi-love-quiz/            # 測驗 05 企劃與設計檔
+│   └── qixi-love-quiz-en/         # 測驗 06 英文版企劃與設計檔
 │
 ├── docs/                          # 📚 專案輔助說明與營運文檔 (集中管理)
 │   ├── BUILD_AND_ENCRYPT.md       # 🛠️ 一鍵打包與 config.js 設定教學 (必看!)
@@ -33,7 +36,8 @@ OnePage心理測驗開發/
 │       ├── guardian-beast/        # 測驗 02: 解鎖隱藏守護神獸
 │       ├── love-attachment/       # 測驗 03: 戀愛依戀類型與契合度診斷
 │       ├── partner-species-report/# 測驗 04: 對象成分暨物種分析報告
-│       └── qixi-love-quiz/        # 測驗 05: 七夕戀愛依附型診斷 (ECR-S 12題)
+│       ├── qixi-love-quiz/        # 測驗 05: 七夕戀愛依附型診斷 (ECR-S 12題)
+│       └── qixi-love-quiz-en/     # 測驗 06: Love Attachment Style Quiz (English)
 │
 ├── release/                       # 🚀 正式發佈資料夾 (部署至 GitHub Pages / 雲端託管)
 │   ├── index.html                 # 全站旗艦門戶頁 (Quiz Hub)
@@ -42,7 +46,8 @@ OnePage心理測驗開發/
 │       ├── guardian-beast/        # 🔒 加密後之守護神獸測驗頁面
 │       ├── love-attachment/       # 🔒 加密後之戀愛依戀測驗頁面
 │       ├── partner-species-report/# 🔒 加密後之物種分析測驗頁面
-│       └── qixi-love-quiz/        # 🔒 加密後之七夕戀愛依附測驗頁面
+│       ├── qixi-love-quiz/        # 🔒 加密後之七夕戀愛依附測驗頁面
+│       └── qixi-love-quiz-en/     # 🔒 加密後之英文戀愛依附測驗頁面
 │
 └── tools/                         # 🛠️ 自動化打包與加密工具
     ├── config.js                  # ⚠️ 測驗登錄設定檔 (新增測驗時必修改此處!)
