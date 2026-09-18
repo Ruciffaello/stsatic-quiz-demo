@@ -63,6 +63,31 @@ Object.keys(config).forEach(quizId => {
     bundleHtml = bundleHtml.replace('</body>', `<script>\n${jsContent}\n</script>\n</body>`);
   }
 
+  // 2.5 將測驗資料夾內的本機圖片嵌入，維持 release 為單一 standalone HTML
+  bundleHtml = bundleHtml.replace(/(<img[^>]*\ssrc=")[^"]+("[^>]*>)/gi, (match, before, after) => {
+    const srcMatch = match.match(/\ssrc="([^"]+)"/i);
+    if (!srcMatch || /^(?:https?:|data:|\/\/)/i.test(srcMatch[1])) return match;
+    const assetPath = path.resolve(quizSrcPath, srcMatch[1]);
+    if (!assetPath.startsWith(quizSrcPath) || !fs.existsSync(assetPath)) return match;
+    const ext = path.extname(assetPath).toLowerCase();
+    const mimeTypes = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif', '.svg': 'image/svg+xml' };
+    const mime = mimeTypes[ext];
+    if (!mime) return match;
+    const dataUri = `data:${mime};base64,${fs.readFileSync(assetPath).toString('base64')}`;
+    return `${before}${dataUri}${after}`;
+  });
+
+  // JavaScript 或 CSS 中直接引用的本機圖片也需內嵌，避免 standalone release 遺失 Canvas 素材。
+  bundleHtml = bundleHtml.replace(/(["'])assets\/([^"']+\.(?:png|jpe?g|webp|gif|svg))\1/gi, (match, quote, relativeAsset) => {
+    const assetPath = path.resolve(quizSrcPath, 'assets', relativeAsset);
+    if (!assetPath.startsWith(quizSrcPath) || !fs.existsSync(assetPath)) return match;
+    const ext = path.extname(assetPath).toLowerCase();
+    const mimeTypes = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif', '.svg': 'image/svg+xml' };
+    const mime = mimeTypes[ext];
+    if (!mime) return match;
+    return `${quote}data:${mime};base64,${fs.readFileSync(assetPath).toString('base64')}${quote}`;
+  });
+
   // 3. 執行 AES-256-GCM 高效能極速加密
   const passcode = item.passcode || '8888';
   const salt = crypto.randomBytes(16);

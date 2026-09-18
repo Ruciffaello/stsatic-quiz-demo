@@ -98,5 +98,16 @@ module.exports = {
     buttonText: "Unlock the Love Attachment Quiz ➔",
     themeColor: "#ff4d6d",
     bgStyle: "linear-gradient(140deg, #2d123b 0%, #4c184c 32%, #6b1d52 65%, #38123e 100%)",
+  },
+
+  "mid-autumn-moon-quiz": {
+    id: "mid-autumn-moon-quiz",
+    title: "月兔搗麻糬｜OnePage 心理測驗",
+    passcode: "8888",
+    instructions: "請輸入 4 位數解鎖卡密（示範卡密：8888）",
+    placeholder: "請輸入解鎖卡密",
+    buttonText: "解鎖月宮食譜 ➔",
+    themeColor: "#d93829",
+    bgStyle: "linear-gradient(155deg, #0d0a14 0%, #171324 55%, #3a1c29 100%)",
   }
 };
