@@ -15,7 +15,7 @@
     .hero-moon-stage { position: relative; width: 250px; height: 250px; margin: 10px auto 0; display: flex; align-items: center; justify-content: center; }
     .start-screen .hero-moon { position: absolute; z-index: 0; inset: 0; width: auto; height: auto; transform: none; background: radial-gradient(circle at 45% 45%, #fffdf4 0%, #fae19c 48%, #e2b04f 95%); box-shadow: 0 0 32px rgba(255,215,120,.45), 0 0 70px rgba(220,140,40,.22); animation: moon-pulse 4s ease-in-out infinite alternate; }
     .start-screen .hero-moon::after { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 75% 30%, rgba(200,145,50,.22) 0%, transparent 45%); content: ""; }
-    .start-screen h1 { position: relative; z-index: 2; margin: 0 0 0 .16em; font-family: "Noto Serif TC", serif; font-size: 33px; font-weight: 900; line-height: 1.25; letter-spacing: .16em; background: linear-gradient(180deg, #57131a 0%, #30080d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 1px 0 rgba(255,245,210,.85)) drop-shadow(0 3px 6px rgba(100,20,25,.28)); }
+    .start-screen h1 { position: relative; z-index: 2; margin: 0 0 0 .16em; font-family: "Noto Serif TC", serif; font-size: 27px; font-weight: 900; line-height: 1.25; letter-spacing: .16em; background: linear-gradient(180deg, #57131a 0%, #30080d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 1px 0 rgba(255,245,210,.85)) drop-shadow(0 3px 6px rgba(100,20,25,.28)); }
     .osmanthus { z-index: 3; right: -8px; top: 28px; color: #ffd88a; font-size: 13px; line-height: 1.45; letter-spacing: 0; transform: none; filter: drop-shadow(0 0 6px rgba(255,215,120,.8)); animation: twinkle 2.2s infinite ease-in-out alternate; }
     .hero-copy { margin: 14px 0 0; padding: 0; border: 0; border-radius: 0; background: none; color: #ecdcc1; font-size: 13px; font-weight: 400; line-height: 1.65; letter-spacing: .04em; text-shadow: 0 2px 8px rgba(0,0,0,.8); }
     .hero-rabbit { width: 160px; height: 160px; margin: 8px auto 0; }
@@ -62,7 +62,7 @@
     .result-hero .result-moon { z-index: 0; top: 8px; width: 230px; height: 230px; box-shadow: 0 0 28px rgba(255,226,142,.56), 0 0 74px rgba(238,159,51,.25); }
     .result-hero .result-limited { position: relative; z-index: 1; width: fit-content; margin: 17px auto 0; padding: 5px 14px; border: 1px solid rgba(94,23,32,.5); border-radius: 99px; background: rgba(255,247,215,.5); font-size: 15px; letter-spacing: .16em; }
     .result-hero .result-title { position: relative; z-index: 3; margin-top: 25px; }
-    .result-hero .result-title h2 { font-family: "Noto Serif TC", serif; font-size: 38px; font-weight: 900; }
+    .result-hero .result-title h2 { font-family: "Noto Serif TC", serif; font-size: 30px; font-weight: 900; }
     .result-hero #result-name { margin: 10px 0; }
     .result-hero .result-art { position: absolute; z-index: 2; right: 0; bottom: 0; left: 0; height: 112px; margin: 0 auto; }
     .result-hero .result-art { bottom: 18px; height: 116px; }
@@ -72,6 +72,7 @@
     .result-card .meaning-summary { margin: 5px 0 8px; color: #ffe3a3; font-family: "Noto Sans TC", sans-serif; font-size: 13px; font-weight: 400; line-height: 1.65; }
     .result-card .meaning-summary .card-label { display: block; margin-bottom: 3px; }
     .result-card .result-blessing { display: block; color: #ffe3a3; text-align: center; }
+    .result-card .blessing-accents { display: inline-block; margin-top: 4px; color: #e8dac4; }
     .result-supports { display: grid; gap: 4px; padding-top: 8px; border-top: 1px solid rgba(255,210,125,.18); }
     .result-supports .support-label { color: #f4c970; font-size: 14px; font-weight: 800; letter-spacing: .13em; }
     .result-support { margin: 0; color: #e8dac4; font-size: 11px; line-height: 1.55; }
@@ -84,6 +85,11 @@
     .is-legendary .result-card { border-color: rgba(255,222,120,.78); background: linear-gradient(145deg, rgba(73,48,89,.94), rgba(33,19,48,.94)); box-shadow: 0 8px 28px rgba(255,196,61,.18); }
     .is-legendary .result-ingredients span { border-color: rgba(255,224,126,.6); background: rgba(255,225,130,.12); color: #fff1b4; }
     .is-legendary .result-supports .support-label, .is-legendary .result-support b { color: #ffe18b; }
+    .result-ingredients:has(.recipe-main) { flex-wrap: wrap; }
+    .result-ingredients .recipe-main, .result-ingredients .recipe-accents { display: block; width: 100%; flex: 0 0 100%; text-align: center; }
+    .result-ingredients .recipe-accents { line-height: 1.5; }
+    .select-screen .ingredients-grid { width: calc(100% + 16px); margin-right: -8px; margin-left: -8px; }
+    .pounding-screen #pound-title { font-family: "Noto Sans TC", sans-serif; font-size: 13px; font-weight: 400; letter-spacing: 0; white-space: nowrap; }
   </style>
 </head>
 <body>
@@ -91,19 +97,19 @@
     <div class="stars" aria-hidden="true"></div>
 
     <section id="start-screen" class="screen active start-screen">
-      <div class="seal">福 · 月宮食譜 · 中秋大吉</div>
-      <div class="hero-moon-stage"><div class="hero-moon" aria-hidden="true"></div><div class="osmanthus" aria-hidden="true">✦<br>✦<br>✦</div><h1>玉杵輕落<br>萬願成糬</h1></div>
-      <p class="hero-copy">今夜金風盈室，月兔將替你搗製<br>一顆專屬的中秋祝福麻糬。</p>
+      <div class="seal">Happy Mid-Autumn Festival!</div>
+      <div class="hero-moon-stage"><div class="hero-moon" aria-hidden="true"></div><div class="osmanthus" aria-hidden="true">✦<br>✦<br>✦</div><h1>As the jade pestle falls,<br>sweet blessings call</h1></div>
+      <p class="hero-copy">Tonight, as the golden autumn breeze fills the room, the Moon Rabbit will pound a sweet mochi just for you, crafted with heartfelt Mid-Autumn blessings.</p>
       <div class="hero-rabbit" aria-hidden="true">
         <img src="assets/Rabbit holding moon cake_7223575.png" alt="">
       </div>
-      <div class="bottom-action-group"><button id="start-btn" class="primary-btn">啟封月宮食譜 <span>➔</span></button><p class="footnote">一主二副 · 煉就一顆專屬月餅</p></div>
+      <div class="bottom-action-group"><button id="start-btn" class="primary-btn">Open the Lunar Recipes <span>➔</span></button><p class="footnote">One Core, Two Infusions — Forge Your Signature Mooncake.</p></div>
     </section>
 
     <section id="select-screen" class="screen select-screen" aria-live="polite">
       <div class="moon-floor" aria-hidden="true"></div>
       <header class="round-header">
-        <span class="round-badge">玉兔搗製中</span>
+        <span class="round-badge">The Moon Rabbit is Pounding...</span>
         <span class="round-count"><b id="round-current">1</b> / 3</span>
       </header>
       <div class="selection-scene" aria-hidden="true">
@@ -111,19 +117,19 @@
         <div id="mix-mochi" class="mix-mochi"></div>
         <div class="selection-mortar"></div>
       </div>
-      <h2 id="ingredient-heading" class="ingredient-heading">第一味 · 選主食材</h2>
-      <div id="ingredients-grid" class="ingredients-grid" role="list" aria-label="選擇食材"></div>
+      <h2 id="ingredient-heading" class="ingredient-heading">Choose Your Primary Ingredient</h2>
+      <div id="ingredients-grid" class="ingredients-grid" role="list" aria-label="Choose an ingredient"></div>
       <div id="selected-info" class="selected-info is-empty">
         <span class="selected-icon">✦</span>
-        <div><strong>請挑選主食材</strong><span>它會決定這顆月餅的核心祝福</span></div>
+        <div><strong>Choose your primary ingredient.</strong><span>It will define the core blessing of this mooncake.</span></div>
       </div>
-      <button id="add-btn" class="primary-btn add-btn" disabled>投入石臼 · 確認這一味 <span>➔</span></button>
+      <button id="add-btn" class="primary-btn add-btn" disabled>Add to Mortar · Confirm Flavor <span>➔</span></button>
       <p id="recipe-line" class="recipe-line">目前配方：尚未投入食材</p>
     </section>
 
     <section id="pounding-screen" class="screen pounding-screen" aria-live="polite">
       <div class="moon-floor" aria-hidden="true"></div>
-      <header class="round-header"><span class="round-badge">玉兔搗製中</span><span class="round-count"><b id="pound-current">1</b> / 3</span></header>
+      <header class="round-header"><span class="round-badge">The Moon Rabbit is Pounding...</span><span class="round-count"><b id="pound-current">1</b> / 3</span></header>
       <p id="pound-selected" class="pound-selected"></p>
       <div class="pounding-scene" aria-hidden="true">
         <div class="pound-halo"></div>
@@ -132,7 +138,7 @@
         <i class="particle p-one"></i><i class="particle p-two"></i><i class="particle p-three"></i>
       </div>
       <h2 id="pound-title">糬糬正在染上月色</h2>
-      <p>玉杵輕落 · 福氣慢慢揉進來</p>
+      <p>A gentle stroke of the jade pestle, slowly kneading good fortune in</p>
       <div class="pound-meter"><i></i></div>
     </section>
 
@@ -142,16 +148,16 @@
         <div class="result-hero">
           <div class="result-moon" aria-hidden="true"></div>
           <div class="result-limited">中秋限定</div>
-          <div class="result-title"><p>你搗出了</p><h2 id="result-name"></h2></div>
+          <div class="result-title"><p>You Pounded Out...</p><h2 id="result-name"></h2></div>
           <div class="result-art" aria-label="本次搗製的麻糬成品"><canvas id="result-pastry" class="result-pastry" width="600" height="360" aria-label="混色月餅成品"></canvas></div>
         </div>
         <article class="result-card">
-          <span class="card-label">核心配方</span><div id="result-ingredients" class="result-ingredients"></div>
-          <div class="meaning"><p class="meaning-summary"><span class="card-label">麻糬寓意：</span><span id="result-blessing" class="result-blessing"></span></p><div id="result-supports" class="result-supports"><span class="support-label">副效果</span></div></div>
-          <div class="festival-greeting"><span class="card-label">中秋祝福</span><p>又到中秋佳節，祝大家花好月圓、人團圓，佳節愉快！也別忘了和朋友分享這份中秋麻糬，把祝福一起送出去～</p></div>
+          <span class="card-label">Core Recipe</span><div id="result-ingredients" class="result-ingredients"></div>
+          <div class="meaning"><p class="meaning-summary"><span class="card-label">Mochi Meaning:</span><span id="result-blessing" class="result-blessing"></span></p><div id="result-supports" class="result-supports"><span class="support-label">Accent Effects</span></div></div>
+          <div class="festival-greeting"><span class="card-label">Mid-Autumn Blessing</span><p>Mid-Autumn Festival is here again! Wishing everyone blooming flowers, a full moon, sweet reunions, and a wonderful holiday! Don’t forget to share your Mid-Autumn mochi with friends and pass along the blessings~</p></div>
         </article>
       </div>
-      <div class="result-actions"><button id="restart-btn" class="secondary-btn">再搗一顆</button><button id="share-btn" class="primary-btn">保存我的月糬</button></div>
+      <div class="result-actions"><button id="restart-btn" class="secondary-btn">Pound Another Mochi</button><button id="share-btn" class="primary-btn">Save My Mochi</button></div>
     </section>
   </main>
   <div id="toast" class="toast" role="status"></div>

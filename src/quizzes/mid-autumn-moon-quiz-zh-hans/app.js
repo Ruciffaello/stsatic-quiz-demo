@@ -2,65 +2,65 @@
   'use strict';
 
   const INGREDIENTS = [
-    { id: 'redbean', name: '紅豆', icon: '🫘', color: '#a8443d', meaning: '心意有回音', result: 'redbean' },
-    { id: 'peanut', name: '花生', icon: '🥜', color: '#d2a64b', meaning: '好事會發生', result: 'peanut' },
-    { id: 'osmanthus', name: '桂花', icon: '🌼', color: '#f4ac2d', meaning: '折桂被看見', result: 'osmanthus' },
+    { id: 'redbean', name: '红豆', icon: '🫘', color: '#a8443d', meaning: '心意有回音', result: 'redbean' },
+    { id: 'peanut', name: '花生', icon: '🥜', color: '#d2a64b', meaning: '好事会发生', result: 'peanut' },
+    { id: 'osmanthus', name: '桂花', icon: '🌼', color: '#f4ac2d', meaning: '折桂被看见', result: 'osmanthus' },
     { id: 'sesame', name: '芝麻', icon: '⚫', color: '#352e31', meaning: '步步往上走', result: 'sesame' },
-    { id: 'chestnut', name: '栗子', icon: '🌰', color: '#935634', meaning: '豐收落袋中', result: 'chestnut' },
-    { id: 'taro', name: '芋頭', icon: '🟣', color: '#a483b2', meaning: '遇見新轉機', result: 'taro' },
-    { id: 'jujube', name: '棗泥', icon: '🟤', color: '#813c32', meaning: '願望早實現', result: 'jujube' },
-    { id: 'pomelo', name: '柚子', icon: '🍊', color: '#d6d96b', meaning: '團圓被守護', result: 'pomelo' },
-    { id: 'mugwort', name: '艾草', icon: '🌿', color: '#6d9a70', meaning: '安心慢慢來', result: 'mugwort' },
-    { id: 'yolk', name: '鹹蛋黃', icon: '🌕', color: '#f6bd31', meaning: '圓滿剛剛好', result: 'yolk' }
+    { id: 'chestnut', name: '栗子', icon: '🌰', color: '#935634', meaning: '丰收落袋中', result: 'chestnut' },
+    { id: 'taro', name: '芋头', icon: '🟣', color: '#a483b2', meaning: '遇见新转机', result: 'taro' },
+    { id: 'jujube', name: '枣泥', icon: '🟤', color: '#813c32', meaning: '愿望早实现', result: 'jujube' },
+    { id: 'pomelo', name: '柚子', icon: '🍊', color: '#d6d96b', meaning: '团圆被守护', result: 'pomelo' },
+    { id: 'mugwort', name: '艾草', icon: '🌿', color: '#6d9a70', meaning: '安心慢慢来', result: 'mugwort' },
+    { id: 'yolk', name: '咸蛋黄', icon: '🌕', color: '#f6bd31', meaning: '圆满刚刚好', result: 'yolk' }
   ];
 
   const RESULTS = {
-    redbean: { name: '紅豆心事糬', blessing: '心意有回音 · 勇敢靠近', meaning: '紅豆象徵相思與真誠靠近。願你收穫心動、人緣，與勇敢表達喜歡的祝福。' },
-    peanut: { name: '花生幸運糬', blessing: '好事發生 · 機會靠近', meaning: '花生象徵好事發生。願你接住眼前的小機會，讓它慢慢長成踏實的幸運。' },
-    osmanthus: { name: '桂花折桂糬', blessing: '折桂被看見 · 貴人相逢', meaning: '桂花象徵折桂與富貴。願你的努力被看見，在重要時刻遇見願意賞識你的人。' },
-    sesame: { name: '芝麻登高糬', blessing: '步步登高 · 穩定精進', meaning: '芝麻象徵節節高升。願你把每天的小小累積，慢慢堆成屬於自己的高度。' },
-    chestnut: { name: '栗子豐收糬', blessing: '豐收落袋 · 踏實富足', meaning: '栗子象徵豐收與成果。願你投入的心力在適當時候開花，收進安心的收穫。' },
-    taro: { name: '芋見轉運糬', blessing: '遇見轉機 · 開啟新篇', meaning: '芋頭帶來「遇頭」的好兆頭。願每一次變動都替你打開新方向，遇見更好的開始。' },
-    jujube: { name: '棗泥早成糬', blessing: '心願早成 · 立即行動', meaning: '棗泥象徵早日實現。願你把藏在心裡的願望，化成今天就能開始的第一步。' },
-    pomelo: { name: '柚香團圓糬', blessing: '團圓守護 · 平安相伴', meaning: '柚子寓意保佑與團圓。願你重視的人都平安相伴，也願你被溫柔地守護。' },
-    mugwort: { name: '艾草安心糬', blessing: '靜心療癒 · 慢慢變好', meaning: '艾草帶來安定與清醒。願你放下不必要的焦慮，在自己的步調裡慢慢變好。' },
-    yolk: { name: '蛋黃滿月糬', blessing: '圓滿知足 · 幸福剛好', meaning: '鹹蛋黃象徵如滿月般的圓滿。願你在關係與生活裡，感受到剛剛好的幸福。' }
+    redbean: { name: '红豆心事糬', blessing: '心意有回音 · 勇敢靠近', meaning: '红豆象征相思与真诚靠近。愿你收获心动、人缘，与勇敢表达喜欢的祝福。' },
+    peanut: { name: '花生幸运糬', blessing: '好事发生 · 机会靠近', meaning: '花生象征好事发生。愿你接住眼前的小机会，让它慢慢长成踏实的幸运。' },
+    osmanthus: { name: '桂花折桂糬', blessing: '折桂被看见 · 贵人相逢', meaning: '桂花象征折桂与富贵。愿你的努力被看见，在重要时刻遇见愿意赏识你的人。' },
+    sesame: { name: '芝麻登高糬', blessing: '步步登高 · 稳定精进', meaning: '芝麻象征节节高升。愿你把每天的小小累积，慢慢堆成属于自己的高度。' },
+    chestnut: { name: '栗子丰收糬', blessing: '丰收落袋 · 踏实富足', meaning: '栗子象征丰收与成果。愿你投入的心力在适当时候开花，收进安心的收获。' },
+    taro: { name: '芋见转运糬', blessing: '遇见转机 · 开启新篇', meaning: '芋头带来「遇头」的好兆头。愿每一次变动都替你打开新方向，遇见更好的开始。' },
+    jujube: { name: '枣泥早成糬', blessing: '心愿早成 · 立即行动', meaning: '枣泥象征早日实现。愿你把藏在心里的愿望，化成今天就能开始的第一步。' },
+    pomelo: { name: '柚香团圆糬', blessing: '团圆守护 · 平安相伴', meaning: '柚子寓意保佑与团圆。愿你重视的人都平安相伴，也愿你被温柔地守护。' },
+    mugwort: { name: '艾草安心糬', blessing: '静心疗愈 · 慢慢变好', meaning: '艾草带来安定与清醒。愿你放下不必要的焦虑，在自己的步调里慢慢变好。' },
+    yolk: { name: '蛋黄满月糬', blessing: '圆满知足 · 幸福刚好', meaning: '咸蛋黄象征如满月般的圆满。愿你在关系与生活里，感受到刚刚好的幸福。' }
   };
 
   const PURE_RESULTS = {
-    redbean: { name: '一心紅豆糬', blessing: '心意有回音 · 專屬心動', meaning: '四杵皆是紅豆，代表你對在意的人與事格外真誠。願你的心意被好好接住。' },
-    peanut: { name: '好事花生糬', blessing: '好事發生 · 幸運集結', meaning: '你相信幸運會落在願意準備的人身上。願每份小小的好事都來得恰到好處。' },
-    osmanthus: { name: '蟾宮桂花糬', blessing: '折桂高光 · 被好好看見', meaning: '今夜的桂花香特別濃。願你在重要舞台散發自己的光，收穫珍貴的肯定。' },
-    sesame: { name: '步步芝麻糬', blessing: '穩穩向上 · 節節高升', meaning: '你相信慢慢走也能走得很遠。願每一點努力都成為日後回望時的底氣。' },
-    chestnut: { name: '滿倉栗子糬', blessing: '豐收滿倉 · 成果落袋', meaning: '你正走在收成的路上。願過去的付出都有回音，讓生活更踏實富足。' },
-    taro: { name: '遇見芋頭糬', blessing: '好兆頭 · 轉機將至', meaning: '所有的芋頭都在說：好事值得再等一下。願你在轉彎處遇見意想不到的新方向。' },
-    jujube: { name: '早成棗泥糬', blessing: '願望早成 · 行動有果', meaning: '你的心願很清晰，也正等著第一步。願你一動身，就離想去的地方更近一些。' },
-    pomelo: { name: '守月柚香糬', blessing: '平安團圓 · 溫柔守護', meaning: '你把陪伴放在心上。願你與重要的人共享月色，也共享平安與安心。' },
-    mugwort: { name: '靜心艾草糬', blessing: '留白安定 · 自在如常', meaning: '有時候，慢下來就是最好的前進。願你保留一點留白，讓心重新回到安穩。' },
-    yolk: { name: '月圓蛋黃糬', blessing: '圓滿相伴 · 幸福綿長', meaning: '你珍惜的，是剛剛好的陪伴。願團圓與溫暖，在這個中秋停留得久一點。' }
+    redbean: { name: '一心红豆糬', blessing: '心意有回音 · 专属心动', meaning: '四杵皆是红豆，代表你对在意的人与事格外真诚。愿你的心意被好好接住。' },
+    peanut: { name: '好事花生糬', blessing: '好事发生 · 幸运集结', meaning: '你相信幸运会落在愿意准备的人身上。愿每份小小的好事都来得恰到好处。' },
+    osmanthus: { name: '蟾宫桂花糬', blessing: '折桂高光 · 被好好看见', meaning: '今夜的桂花香特别浓。愿你在重要舞台散发自己的光，收获珍贵的肯定。' },
+    sesame: { name: '步步芝麻糬', blessing: '稳稳向上 · 节节高升', meaning: '你相信慢慢走也能走得很远。愿每一点努力都成为日后回望时的底气。' },
+    chestnut: { name: '满仓栗子糬', blessing: '丰收满仓 · 成果落袋', meaning: '你正走在收成的路上。愿过去的付出都有回音，让生活更踏实富足。' },
+    taro: { name: '遇见芋头糬', blessing: '好兆头 · 转机将至', meaning: '所有的芋头都在说：好事值得再等一下。愿你在转弯处遇见意想不到的新方向。' },
+    jujube: { name: '早成枣泥糬', blessing: '愿望早成 · 行动有果', meaning: '你的心愿很清晰，也正等着第一步。愿你一动身，就离想去的地方更近一些。' },
+    pomelo: { name: '守月柚香糬', blessing: '平安团圆 · 温柔守护', meaning: '你把陪伴放在心上。愿你与重要的人共享月色，也共享平安与安心。' },
+    mugwort: { name: '静心艾草糬', blessing: '留白安定 · 自在如常', meaning: '有时候，慢下来就是最好的前进。愿你保留一点留白，让心重新回到安稳。' },
+    yolk: { name: '月圆蛋黄糬', blessing: '圆满相伴 · 幸福绵长', meaning: '你珍惜的，是刚刚好的陪伴。愿团圆与温暖，在这个中秋停留得久一点。' }
   };
 
   const SUPPORT_BLESSINGS = {
     redbean: { suffix: '心意被好好接住', boost: '心意被加倍珍惜' },
-    peanut: { suffix: '好運恰到好處', boost: '好運加倍靠近' },
-    osmanthus: { suffix: '努力被好好看見', boost: '光芒更被看見' },
-    sesame: { suffix: '穩穩向上', boost: '前進的步伐更加穩定' },
-    chestnut: { suffix: '收進踏實的收穫', boost: '收穫加倍落袋' },
-    taro: { suffix: '在轉彎處遇見新方向', boost: '轉機加倍靠近' },
-    jujube: { suffix: '心願早日落實', boost: '心願更快開花結果' },
-    pomelo: { suffix: '有團圓平安相伴', boost: '團圓守護加倍相伴' },
-    mugwort: { suffix: '在自己的步調裡安心前行', boost: '安心與療癒加倍停留' },
-    yolk: { suffix: '感受剛剛好的圓滿', boost: '圓滿幸福加倍停留' }
+    peanut: { suffix: '好运恰到好处', boost: '好运加倍靠近' },
+    osmanthus: { suffix: '努力被好好看见', boost: '光芒更被看见' },
+    sesame: { suffix: '稳稳向上', boost: '前进的步伐更加稳定' },
+    chestnut: { suffix: '收进踏实的收获', boost: '收获加倍落袋' },
+    taro: { suffix: '在转弯处遇见新方向', boost: '转机加倍靠近' },
+    jujube: { suffix: '心愿早日落实', boost: '心愿更快开花结果' },
+    pomelo: { suffix: '有团圆平安相伴', boost: '团圆守护加倍相伴' },
+    mugwort: { suffix: '在自己的步调里安心前行', boost: '安心与疗愈加倍停留' },
+    yolk: { suffix: '感受刚刚好的圆满', boost: '圆满幸福加倍停留' }
   };
 
   const LEGENDARY = {
-    name: '月兔天選・萬福十全糬',
-    blessing: '萬福集結 · 十全中秋',
-    meaning: '月兔灑下萬福金粉，十種月宮好運同時落進你的石臼。願財運、心動、貴人、團圓與心安，全都在這個中秋向你靠近。',
-    ingredients: ['✦ 月華金粉', '🌕 玉兔仙露', '☁️ 桂影靈光'],
+    name: '月兔天选・万福十全糬',
+    blessing: '万福集结 · 十全中秋',
+    meaning: '月兔洒下万福金粉，十种月宫好运同时落进你的石臼。愿财运、心动、贵人、团圆与心安，全都在这个中秋向你靠近。',
+    ingredients: ['✦ 月华金粉', '🌕 玉兔仙露', '☁️ 桂影灵光'],
     effects: [
-      ['天選加護', '接下來的日子，願好事比預期更早抵達。'],
-      ['團圓月光', '想念的人與在意的心願，都被溫柔照亮。']
+      ['天选加护', '接下来的日子，愿好事比预期更早抵达。'],
+      ['团圆月光', '想念的人与在意的心愿，都被温柔照亮。']
     ]
   };
   const state = { picks: [], selected: null };
@@ -94,16 +94,16 @@
   function recipeText() { return state.picks.length ? state.picks.map((pick, index) => `${index === 0 ? '主' : '副'}·${pick.name}`).join('　') : '尚未投入食材'; }
   function selectionPrompt() {
     const prompts = [
-      ['請挑選主食材', '它會決定這顆月餅的核心祝福'],
-      ['請挑選第一味副食材', '它會成為主祝福後方的補充語'],
-      ['請挑選第二味副食材', '可重複選擇，讓祝福更加強烈']
+      ['请挑选主食材', '它会决定这颗月饼的核心祝福'],
+      ['请挑选第一味副食材', '它会成为主祝福后方的补充语'],
+      ['请挑选第二味副食材', '可重复选择，让祝福更加强烈']
     ];
     return prompts[state.picks.length] || prompts[2];
   }
   function updateSelectionUI() {
     const step = state.picks.length + 1;
     $('#round-current').textContent = step;
-    $('#ingredient-heading').textContent = step === 1 ? '第一味 · 選主食材' : `第${step}味 · 選副食材`;
+    $('#ingredient-heading').textContent = step === 1 ? '第一味 · 选主食材' : `第${step}味 · 选副食材`;
     $('#recipe-line').textContent = `目前配方：${recipeText()}`;
     updateMix();
   }
@@ -196,22 +196,22 @@
     const isLegendary = result === LEGENDARY;
     $('#result-capture').classList.toggle('is-legendary', isLegendary);
     $('#result-screen').classList.toggle('is-legendary', isLegendary);
-    document.querySelector('.result-limited').textContent = isLegendary ? '1% 月兔天選' : '中秋限定';
+    document.querySelector('.result-limited').textContent = isLegendary ? '1% 月兔天选' : '中秋限定';
     $('#result-name').textContent = result.name; $('#result-blessing').textContent = blessingWithSupports(result);
     $('#result-ingredients').innerHTML = isLegendary
       ? result.ingredients.map((ingredient) => `<span>${ingredient}</span>`).join('')
       : state.picks.map((pick, index) => `<span>${index === 0 ? '主' : '副'}·${pick.icon} ${pick.name}</span>`).join('');
     $('#result-supports').innerHTML = isLegendary
-      ? `<span class="support-label">天選效果</span>${result.effects.map(([title, detail]) => `<p class="result-support"><b>${title}：</b>${detail}</p>`).join('')}`
+      ? `<span class="support-label">天选效果</span>${result.effects.map(([title, detail]) => `<p class="result-support"><b>${title}：</b>${detail}</p>`).join('')}`
       : `<span class="support-label">副效果</span>${state.picks.slice(1).map((pick) => `<p class="result-support"><b>${pick.name}：</b>${SUPPORT_BLESSINGS[pick.result].suffix}</p>`).join('')}`;
     drawResultPastry(result);
     showScreen('result');
   }
-  function restart() { state.picks = []; state.selected = null; updateMix('#fffdf5'); updateSelectionUI(); renderIngredients(); selectedInfo.classList.add('is-empty'); selectedInfo.innerHTML = '<span class="selected-icon">✦</span><div><strong>請挑選主食材</strong><span>它會決定這顆月餅的核心祝福</span></div>'; addButton.disabled = true; showScreen('start'); }
+  function restart() { state.picks = []; state.selected = null; updateMix('#fffdf5'); updateSelectionUI(); renderIngredients(); selectedInfo.classList.add('is-empty'); selectedInfo.innerHTML = '<span class="selected-icon">✦</span><div><strong>请挑选主食材</strong><span>它会决定这颗月饼的核心祝福</span></div>'; addButton.disabled = true; showScreen('start'); }
   function flash(message) { toast.textContent = message; toast.classList.add('show'); window.setTimeout(() => toast.classList.remove('show'), 2600); }
 
   $('#start-btn').addEventListener('click', () => { updateSelectionUI(); renderIngredients(); showScreen('select'); });
   addButton.addEventListener('click', addIngredient);
   $('#restart-btn').addEventListener('click', restart);
-  $('#share-btn').addEventListener('click', () => flash('因為開發者技術有限，這次請用截圖的方式保存結果～'));
+  $('#share-btn').addEventListener('click', () => flash('因为开发者技术有限，这次请用截图的方式保存结果～'));
 })();

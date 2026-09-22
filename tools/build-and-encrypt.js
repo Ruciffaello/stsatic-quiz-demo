@@ -88,6 +88,13 @@ Object.keys(config).forEach(quizId => {
     return `${quote}data:${mime};base64,${fs.readFileSync(assetPath).toString('base64')}${quote}`;
   });
 
+  if (item.encrypt === false) {
+    const finalReleaseFile = path.join(quizReleasePath, 'index.html');
+    fs.writeFileSync(finalReleaseFile, bundleHtml, 'utf8');
+    console.log(`  🌕 [${quizId}] 已輸出未加密獨立頁面：release/q/${quizId}/index.html`);
+    return;
+  }
+
   // 3. 執行 AES-256-GCM 高效能極速加密
   const passcode = item.passcode || '8888';
   const salt = crypto.randomBytes(16);
