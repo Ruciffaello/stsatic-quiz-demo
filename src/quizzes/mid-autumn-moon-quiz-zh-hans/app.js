@@ -207,11 +207,49 @@
     drawResultPastry(result);
     showScreen('result');
   }
+  function downloadResultCard() {
+    const resultName = $('#result-name').textContent.trim();
+    const ingredients = [...document.querySelectorAll('#result-ingredients span')].map((item) => item.textContent.trim()).join('　');
+    const effectLabel = $('#result-supports .support-label').textContent.trim();
+    const effects = [...document.querySelectorAll('#result-supports .result-support')].map((item) => item.textContent.trim());
+    const blessing = $('#result-blessing').textContent.trim();
+    const greeting = '又到中秋佳节，祝大家花好月圆、人团圆，佳节愉快！也别忘了和朋友分享这份中秋麻糬，把祝福一起送出去～';
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1350;
+    const ctx = canvas.getContext('2d');
+    const drawWrapped = (text, x, y, width, lineHeight, font, color) => {
+      ctx.font = font; ctx.fillStyle = color;
+      const lines = []; let line = '';
+      for (const char of text) { if (ctx.measureText(line + char).width > width && line) { lines.push(line); line = char; } else line += char; }
+      if (line) lines.push(line);
+      lines.forEach((item, index) => ctx.fillText(item, x, y + index * lineHeight));
+      return y + lines.length * lineHeight;
+    };
+    const background = ctx.createLinearGradient(0, 0, 1080, 1350);
+    background.addColorStop(0, '#351720'); background.addColorStop(.55, '#1f1120'); background.addColorStop(1, '#0d0a14');
+    ctx.fillStyle = background; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = 'rgba(255, 210, 125, .58)'; ctx.lineWidth = 4; ctx.strokeRect(48, 48, 984, 1254);
+    ctx.fillStyle = '#f4c970'; ctx.font = '800 34px "Noto Sans SC", sans-serif'; ctx.textAlign = 'center'; ctx.fillText('月兔捣麻糬', 540, 136);
+    ctx.fillStyle = '#fff0c8'; ctx.font = '900 58px "Noto Serif SC", serif'; ctx.fillText(resultName, 540, 220); ctx.textAlign = 'left';
+    let y = 312;
+    const section = (label, text, color = '#efe2ce') => {
+      ctx.fillStyle = '#f4c970'; ctx.font = '800 30px "Noto Sans SC", sans-serif'; ctx.fillText(label, 108, y); y += 54;
+      y = drawWrapped(text, 108, y, 864, 48, '400 31px "Noto Sans SC", sans-serif', color) + 42;
+      ctx.strokeStyle = 'rgba(255, 210, 125, .22)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(108, y); ctx.lineTo(972, y); ctx.stroke(); y += 52;
+    };
+    section('核心配方', ingredients, '#fff3d9');
+    section('麻糬寓意', blessing, '#ffe3a3');
+    section(effectLabel, effects.join('　'), '#e8dac4');
+    section('中秋祝福', greeting, '#cdbba5');
+    const link = document.createElement('a'); link.href = canvas.toDataURL('image/png'); link.download = `月兔捣麻糬-${resultName || '我的结果'}.png`;
+    document.body.appendChild(link); link.click(); link.remove(); flash('结果卡已下载');
+  }
   function restart() { state.picks = []; state.selected = null; updateMix('#fffdf5'); updateSelectionUI(); renderIngredients(); selectedInfo.classList.add('is-empty'); selectedInfo.innerHTML = '<span class="selected-icon">✦</span><div><strong>请挑选主食材</strong><span>它会决定这颗月饼的核心祝福</span></div>'; addButton.disabled = true; showScreen('start'); }
   function flash(message) { toast.textContent = message; toast.classList.add('show'); window.setTimeout(() => toast.classList.remove('show'), 2600); }
 
   $('#start-btn').addEventListener('click', () => { updateSelectionUI(); renderIngredients(); showScreen('select'); });
   addButton.addEventListener('click', addIngredient);
   $('#restart-btn').addEventListener('click', restart);
-  $('#share-btn').addEventListener('click', () => flash('因为开发者技术有限，这次请用截图的方式保存结果～'));
+  $('#share-btn').addEventListener('click', downloadResultCard);
 })();

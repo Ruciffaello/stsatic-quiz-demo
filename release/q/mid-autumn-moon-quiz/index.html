@@ -154,7 +154,7 @@
           <div class="festival-greeting"><span class="card-label">中秋祝福</span><p>又到中秋佳節，祝大家花好月圓、人團圓，佳節愉快！也別忘了和朋友分享這份中秋麻糬，把祝福一起送出去～</p></div>
         </article>
       </div>
-      <div class="result-actions"><button id="restart-btn" class="secondary-btn">再搗一顆</button><button id="share-btn" class="primary-btn">保存我的月糬</button></div>
+      <div class="result-actions"><button id="restart-btn" class="secondary-btn">再搗一顆</button><button id="share-btn" class="primary-btn">下載結果卡</button></div>
     </section>
   </main>
   <div id="toast" class="toast" role="status"></div>
@@ -368,13 +368,82 @@
     drawResultPastry(result);
     showScreen('result');
   }
+  function downloadResultCard() {
+    const resultName = $('#result-name').textContent.trim();
+    const ingredients = [...document.querySelectorAll('#result-ingredients span')].map((item) => item.textContent.trim()).join('　');
+    const effectLabel = $('#result-supports .support-label').textContent.trim();
+    const effects = [...document.querySelectorAll('#result-supports .result-support')].map((item) => item.textContent.trim());
+    const blessing = $('#result-blessing').textContent.trim();
+    const greeting = '又到中秋佳節，祝大家花好月圓、人團圓，佳節愉快！也別忘了和朋友分享這份中秋麻糬，把祝福一起送出去～';
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1350;
+    const ctx = canvas.getContext('2d');
+    const drawWrapped = (text, x, y, width, lineHeight, font, color) => {
+      ctx.font = font;
+      ctx.fillStyle = color;
+      const lines = [];
+      let line = '';
+      for (const char of text) {
+        if (ctx.measureText(line + char).width > width && line) { lines.push(line); line = char; }
+        else line += char;
+      }
+      if (line) lines.push(line);
+      lines.forEach((item, index) => ctx.fillText(item, x, y + index * lineHeight));
+      return y + lines.length * lineHeight;
+    };
+
+    const background = ctx.createLinearGradient(0, 0, 1080, 1350);
+    background.addColorStop(0, '#351720');
+    background.addColorStop(.55, '#1f1120');
+    background.addColorStop(1, '#0d0a14');
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = 'rgba(255, 210, 125, .58)';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(48, 48, 984, 1254);
+    ctx.fillStyle = '#f4c970';
+    ctx.font = '800 34px "Noto Sans TC", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('月兔搗麻糬', 540, 136);
+    ctx.fillStyle = '#fff0c8';
+    ctx.font = '900 58px "Noto Serif TC", serif';
+    ctx.fillText(resultName, 540, 220);
+    ctx.textAlign = 'left';
+
+    let y = 312;
+    const section = (label, text, color = '#efe2ce') => {
+      ctx.fillStyle = '#f4c970';
+      ctx.font = '800 30px "Noto Sans TC", sans-serif';
+      ctx.fillText(label, 108, y);
+      y += 54;
+      y = drawWrapped(text, 108, y, 864, 48, '400 31px "Noto Sans TC", sans-serif', color) + 42;
+      ctx.strokeStyle = 'rgba(255, 210, 125, .22)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(108, y); ctx.lineTo(972, y); ctx.stroke();
+      y += 52;
+    };
+    section('核心配方', ingredients, '#fff3d9');
+    section('麻糬寓意', blessing, '#ffe3a3');
+    section(effectLabel, effects.join('　'), '#e8dac4');
+    section('中秋祝福', greeting, '#cdbba5');
+
+    const url = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `月兔搗麻糬-${resultName || '我的結果'}.png`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    flash('結果卡已下載');
+  }
   function restart() { state.picks = []; state.selected = null; updateMix('#fffdf5'); updateSelectionUI(); renderIngredients(); selectedInfo.classList.add('is-empty'); selectedInfo.innerHTML = '<span class="selected-icon">✦</span><div><strong>請挑選主食材</strong><span>它會決定這顆月餅的核心祝福</span></div>'; addButton.disabled = true; showScreen('start'); }
   function flash(message) { toast.textContent = message; toast.classList.add('show'); window.setTimeout(() => toast.classList.remove('show'), 2600); }
 
   $('#start-btn').addEventListener('click', () => { updateSelectionUI(); renderIngredients(); showScreen('select'); });
   addButton.addEventListener('click', addIngredient);
   $('#restart-btn').addEventListener('click', restart);
-  $('#share-btn').addEventListener('click', () => flash('因為開發者技術有限，這次請用截圖的方式保存結果～'));
+  $('#share-btn').addEventListener('click', downloadResultCard);
 })();
 
 </script>

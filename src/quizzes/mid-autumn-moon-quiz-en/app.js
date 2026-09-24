@@ -241,11 +241,49 @@
     drawResultPastry(result);
     showScreen('result');
   }
+  function downloadResultCard() {
+    const resultName = $('#result-name').textContent.trim();
+    const ingredients = [...document.querySelectorAll('#result-ingredients span')].map((item) => item.textContent.trim()).join('  ');
+    const effectLabel = $('#result-supports .support-label').textContent.trim();
+    const effects = [...document.querySelectorAll('#result-supports .result-support')].map((item) => item.textContent.trim());
+    const blessing = $('#result-blessing').textContent.trim();
+    const greeting = 'Mid-Autumn Festival is here again! Wishing everyone blooming flowers, a full moon, sweet reunions, and a wonderful holiday! Don’t forget to share your Mid-Autumn mochi with friends and pass along the blessings~';
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1600;
+    const ctx = canvas.getContext('2d');
+    const drawWrapped = (text, x, y, width, lineHeight, font, color) => {
+      ctx.font = font; ctx.fillStyle = color;
+      const words = text.split(/(\s+)/); const lines = []; let line = '';
+      words.forEach((word) => { if (ctx.measureText(line + word).width > width && line.trim()) { lines.push(line.trim()); line = word.trimStart(); } else line += word; });
+      if (line.trim()) lines.push(line.trim());
+      lines.forEach((item, index) => ctx.fillText(item, x, y + index * lineHeight));
+      return y + lines.length * lineHeight;
+    };
+    const background = ctx.createLinearGradient(0, 0, 1080, 1600);
+    background.addColorStop(0, '#351720'); background.addColorStop(.55, '#1f1120'); background.addColorStop(1, '#0d0a14');
+    ctx.fillStyle = background; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = 'rgba(255, 210, 125, .58)'; ctx.lineWidth = 4; ctx.strokeRect(48, 48, 984, 1504);
+    ctx.fillStyle = '#f4c970'; ctx.font = '800 34px Georgia, serif'; ctx.textAlign = 'center'; ctx.fillText('Moon Rabbit Pounding Mochi', 540, 136);
+    ctx.fillStyle = '#fff0c8'; ctx.font = '900 54px Georgia, serif'; ctx.fillText(resultName, 540, 220); ctx.textAlign = 'left';
+    let y = 312;
+    const section = (label, text, color = '#efe2ce') => {
+      ctx.fillStyle = '#f4c970'; ctx.font = '800 30px Arial, sans-serif'; ctx.fillText(label, 108, y); y += 54;
+      y = drawWrapped(text, 108, y, 864, 48, '400 31px Arial, sans-serif', color) + 42;
+      ctx.strokeStyle = 'rgba(255, 210, 125, .22)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(108, y); ctx.lineTo(972, y); ctx.stroke(); y += 52;
+    };
+    section('CORE RECIPE', ingredients, '#fff3d9');
+    section('MOCHI MEANING', blessing, '#ffe3a3');
+    section(effectLabel.toUpperCase(), effects.join('  '), '#e8dac4');
+    section('MID-AUTUMN BLESSING', greeting, '#cdbba5');
+    const link = document.createElement('a'); link.href = canvas.toDataURL('image/png'); link.download = `moon-rabbit-mochi-${resultName || 'my-result'}.png`;
+    document.body.appendChild(link); link.click(); link.remove(); flash('Your result card has been downloaded.');
+  }
   function restart() { state.picks = []; state.selected = null; updateMix('#fffdf5'); updateSelectionUI(); renderIngredients(); selectedInfo.classList.add('is-empty'); selectedInfo.innerHTML = '<span class="selected-icon">✦</span><div><strong>Choose your primary ingredient.</strong><span>It will define the core blessing of this mooncake.</span></div>'; addButton.disabled = true; showScreen('start'); }
   function flash(message) { toast.textContent = message; toast.classList.add('show'); window.setTimeout(() => toast.classList.remove('show'), 2600); }
 
   $('#start-btn').addEventListener('click', () => { updateSelectionUI(); renderIngredients(); showScreen('select'); });
   addButton.addEventListener('click', addIngredient);
   $('#restart-btn').addEventListener('click', restart);
-  $('#share-btn').addEventListener('click', () => flash('Please use your device screenshot feature to save your result.'));
+  $('#share-btn').addEventListener('click', downloadResultCard);
 })();
