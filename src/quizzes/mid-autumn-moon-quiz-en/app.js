@@ -64,34 +64,34 @@
     ]
   };
   Object.assign(RESULTS, {
-    redbean:{name:"Red Bean Heartfelt Mochi",blessing:"Heartfelt intentions resonate · Draw near with courage",meaning:"Red beans symbolize longing and sincere bonds. May you find fluttered hearts, warmth in connection, and the courage to voice your feelings."},
-    peanut:{name:"Good Fortune Peanut Mochi",blessing:"Good things unfold · Opportunities arrive",meaning:"Peanuts bring the blessing of good things unfolding. May you catch every small chance today and watch it grow into lasting fortune."},
-    osmanthus:{name:"Sweet Osmanthus Laurel Mochi",blessing:"Laurels and recognition · A shining moment",meaning:"Osmanthus blossoms symbolize triumphs and grace. May your hard work shine through and be truly recognized when it matters most."},
-    sesame:{name:"Rising Sesame Mochi",blessing:"Rising step by step · Steady progress",meaning:"Sesame stands for rising step by step. May every small daily effort stack into your own steady climb to success."},
-    chestnut:{name:"Abundant Chestnut Mochi",blessing:"A harvest gathered · Grounded abundance",meaning:"Chestnuts herald a bountiful harvest. May your dedication bloom at the right moment, bringing fruitful peace of mind."},
-    taro:{name:"Destined Taro Mochi",blessing:"A lucky turn · Fresh beginnings",meaning:"Taro brings the good omen of a lucky turn. May every change open a fresh path and lead you to brighter beginnings."},
-    jujube:{name:"Early Bloom Jujube Mochi",blessing:"Wishes realized · A brave first step",meaning:"Jujube dates promise sweet wishes realized soon. May the dreams in your heart turn into the first brave step you take today."},
-    pomelo:{name:"Reunion Pomelo Mochi",blessing:"Reunion safeguarded · Gentle protection",meaning:"Pomelo holds the wish for safety, blessing, and reunion. May those you cherish stay safe by your side, always wrapped in gentle protection."},
-    mugwort:{name:"Serene Mugwort Mochi",blessing:"Calm and clarity · Healing at your pace",meaning:"Mugwort brings calm, clarity, and peace. May you let go of all worry and flourish gently at your very own pace."},
-    yolk:{name:"Full Moon Yolk Mochi",blessing:"Wholeness and contentment · Just-right bliss",meaning:"Salted egg yolk shines like the round full moon. May you feel effortless, just-right bliss in every bond and every day."}
+    redbean:{name:"Red Bean Heartfelt Mochi Mooncake",blessing:"Heartfelt intentions resonate · Draw near with courage",meaning:"Red beans symbolize longing and sincere bonds. May you find fluttered hearts, warmth in connection, and the courage to voice your feelings."},
+    peanut:{name:"Good Fortune Peanut Mochi Mooncake",blessing:"Good things unfold · Opportunities arrive",meaning:"Peanuts bring the blessing of good things unfolding. May you catch every small chance today and watch it grow into lasting fortune."},
+    osmanthus:{name:"Sweet Osmanthus Laurel Mochi Mooncake",blessing:"Laurels and recognition · A shining moment",meaning:"Osmanthus blossoms symbolize triumphs and grace. May your hard work shine through and be truly recognized when it matters most."},
+    sesame:{name:"Rising Sesame Mochi Mooncake",blessing:"Rising step by step · Steady progress",meaning:"Sesame stands for rising step by step. May every small daily effort stack into your own steady climb to success."},
+    chestnut:{name:"Abundant Chestnut Mochi Mooncake",blessing:"A harvest gathered · Grounded abundance",meaning:"Chestnuts herald a bountiful harvest. May your dedication bloom at the right moment, bringing fruitful peace of mind."},
+    taro:{name:"Destined Taro Mochi Mooncake",blessing:"A lucky turn · Fresh beginnings",meaning:"Taro brings the good omen of a lucky turn. May every change open a fresh path and lead you to brighter beginnings."},
+    jujube:{name:"Early Bloom Jujube Mochi Mooncake",blessing:"Wishes realized · A brave first step",meaning:"Jujube dates promise sweet wishes realized soon. May the dreams in your heart turn into the first brave step you take today."},
+    pomelo:{name:"Reunion Pomelo Mochi Mooncake",blessing:"Reunion safeguarded · Gentle protection",meaning:"Pomelo holds the wish for safety, blessing, and reunion. May those you cherish stay safe by your side, always wrapped in gentle protection."},
+    mugwort:{name:"Serene Mugwort Mochi Mooncake",blessing:"Calm and clarity · Healing at your pace",meaning:"Mugwort brings calm, clarity, and peace. May you let go of all worry and flourish gently at your very own pace."},
+    yolk:{name:"Full Moon Yolk Mochi Mooncake",blessing:"Wholeness and contentment · Just-right bliss",meaning:"Salted egg yolk shines like the round full moon. May you feel effortless, just-right bliss in every bond and every day."}
   });
   Object.assign(PURE_RESULTS, {
-    redbean:{name:"Pure Devotion Red Bean Mochi",blessing:"Sincere devotion · Cherished deeply",meaning:"When all strikes are red bean, your devotion runs true. May your sincerity be received with open arms and cherished deeply."},
-    peanut:{name:"Serendipity Peanut Mochi",blessing:"Gentle fortune · Perfect timing",meaning:"Good things find those ready to welcome them. May every bit of gentle fortune arrive at the perfect moment."},
-    osmanthus:{name:"Celestial Osmanthus Mochi",blessing:"Celestial brilliance · Earned honor",meaning:"Tonight, the osmanthus fragrance is at its peak. May you shine on your greatest stage and earn the honor you deserve."},
-    sesame:{name:"Stride by Stride Sesame Mochi",blessing:"A gentle pace · Quiet strength",meaning:"A gentle pace still carries you far. May every quiet effort become the quiet strength you look back on with pride."},
-    chestnut:{name:"Golden Harvest Chestnut Mochi",blessing:"Harvest path · Rewarding abundance",meaning:"You are walking along the harvest path. May every drop of effort echo back with rewarding abundance."},
-    taro:{name:"Serendipitous Taro Mochi",blessing:"Good things are worth the wait",meaning:"Every taro whisper reminds us: good things are worth the wait. May unexpected paths appear around every corner."},
-    jujube:{name:"Swift Success Jujube Mochi",blessing:"A clear dream · A first leap",meaning:"Your dream is clear, waiting only for that first leap. May moving forward bring you closer to where you long to be."},
-    pomelo:{name:"Moonlit Companion Pomelo Mochi",blessing:"Companionship · Peaceful warmth",meaning:"Companionship is your dearest wish. May you share the moonlight and peaceful warmth with those you love."},
-    mugwort:{name:"Mindful Mugwort Mochi",blessing:"Stillness · A calm heart",meaning:"Sometimes, slowing down is the best way forward. Leave space for stillness, and let your heart find calm once more."},
-    yolk:{name:"Golden Reunion Yolk Mochi",blessing:"Just-right presence · Lingering warmth",meaning:"What you treasure is presence that feels just right. May warmth and reunion linger softly this Mid-Autumn."}
+    redbean:{name:"Pure Devotion Red Bean Mochi Mooncake",blessing:"Sincere devotion · Cherished deeply",meaning:"When all strikes are red bean, your devotion runs true. May your sincerity be received with open arms and cherished deeply."},
+    peanut:{name:"Serendipity Peanut Mochi Mooncake",blessing:"Gentle fortune · Perfect timing",meaning:"Good things find those ready to welcome them. May every bit of gentle fortune arrive at the perfect moment."},
+    osmanthus:{name:"Celestial Osmanthus Mochi Mooncake",blessing:"Celestial brilliance · Earned honor",meaning:"Tonight, the osmanthus fragrance is at its peak. May you shine on your greatest stage and earn the honor you deserve."},
+    sesame:{name:"Stride by Stride Sesame Mochi Mooncake",blessing:"A gentle pace · Quiet strength",meaning:"A gentle pace still carries you far. May every quiet effort become the quiet strength you look back on with pride."},
+    chestnut:{name:"Golden Harvest Chestnut Mochi Mooncake",blessing:"Harvest path · Rewarding abundance",meaning:"You are walking along the harvest path. May every drop of effort echo back with rewarding abundance."},
+    taro:{name:"Serendipitous Taro Mochi Mooncake",blessing:"Good things are worth the wait",meaning:"Every taro whisper reminds us: good things are worth the wait. May unexpected paths appear around every corner."},
+    jujube:{name:"Swift Success Jujube Mochi Mooncake",blessing:"A clear dream · A first leap",meaning:"Your dream is clear, waiting only for that first leap. May moving forward bring you closer to where you long to be."},
+    pomelo:{name:"Moonlit Companion Pomelo Mochi Mooncake",blessing:"Companionship · Peaceful warmth",meaning:"Companionship is your dearest wish. May you share the moonlight and peaceful warmth with those you love."},
+    mugwort:{name:"Mindful Mugwort Mochi Mooncake",blessing:"Stillness · A calm heart",meaning:"Sometimes, slowing down is the best way forward. Leave space for stillness, and let your heart find calm once more."},
+    yolk:{name:"Golden Reunion Yolk Mochi Mooncake",blessing:"Just-right presence · Lingering warmth",meaning:"What you treasure is presence that feels just right. May warmth and reunion linger softly this Mid-Autumn."}
   });
   Object.assign(SUPPORT_BLESSINGS, {
     redbean:{suffix:"Your sincerity is warmly received",boost:"Your sincerity is twice as cherished"}, peanut:{suffix:"Good fortune right on time",boost:"Good fortune draws twice as close"}, osmanthus:{suffix:"Efforts clearly recognized",boost:"Your brilliance shines twice as bright"}, sesame:{suffix:"Steady upward progress",boost:"Every step forward becomes even steadier"}, chestnut:{suffix:"A grounded, fruitful yield",boost:"Rewarding harvest doubled in hand"}, taro:{suffix:"Fresh paths around the corner",boost:"Fortunate turns draw twice as close"}, jujube:{suffix:"Wishes blooming soon",boost:"Wishes blossom into reality even faster"}, pomelo:{suffix:"Protected with peace and reunion",boost:"Peace and protection double their embrace"}, mugwort:{suffix:"Move ahead at your own calm pace",boost:"Serenity and healing linger twice as long"}, yolk:{suffix:"Perfect harmony just right",boost:"Pure fulfillment lingers twice as long"}
   });
   Object.assign(LEGENDARY, {
-    name:"Chosen by the Moon Rabbit · Flawless Tenfold Blessings Mochi",
+    name:"Chosen by the Moon Rabbit · Flawless Tenfold Blessings Mochi Mooncake",
     blessing:"Myriad blessings unite · A flawless Mid-Autumn",
     meaning:"As the Moon Rabbit showers golden dust of infinite blessings, ten kinds of lunar fortune fall into your mortar. May wealth, love, mentors, reunion, and peace all gather around you this Mid-Autumn.",
     ingredients:["✦ Moonlit Golden Dust","🌕 Moon Rabbit Dew","☁️ Osmanthus Glow"],
