@@ -35,6 +35,18 @@ proposals/
 │   ├── PROPOSAL.md
 │   └── DESIGN.md
 │
+├── mid-autumn-moon-quiz/          # 測驗 07: 月兔搗麻糬 (企劃與設計存檔)
+│   ├── PROPOSAL.md
+│   └── DESIGN.md
+│
+├── halloween-quiz/                # 測驗 08: 萬聖夜幽靈獵手 (手電筒探險小遊戲企劃與技術規格)
+│   ├── web.md
+│   ├── PROPOSAL.md
+│   ├── DESIGN.md
+│   ├── mummy.png
+│   ├── pumpkin.png
+│   └── result-music.mp3
+│
 └── [new-quiz-id]/                 # ➕ 新增提案...
     ├── PROPOSAL.md
     └── DESIGN.md

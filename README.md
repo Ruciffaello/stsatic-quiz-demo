@@ -19,7 +19,8 @@ OnePage心理測驗開發/
 │   ├── partner-species-report/    # 測驗 04 企劃與設計檔
 │   ├── qixi-love-quiz/            # 測驗 05 企劃與設計檔
 │   ├── qixi-love-quiz-en/         # 測驗 06 英文版企劃與設計檔
-│   └── mid-autumn-moon-quiz/      # 測驗 07 月兔搗麻糬企劃、設計與試作檔
+│   ├── mid-autumn-moon-quiz/      # 測驗 07 月兔搗麻糬企劃、設計與試作檔
+│   └── halloween-quiz/            # 測驗 08 萬聖夜幽靈獵手（手電筒探險小遊戲）企劃與設計檔
 │
 ├── docs/                          # 📚 專案輔助說明與營運文檔 (集中管理)
 │   ├── BUILD_AND_ENCRYPT.md       # 🛠️ 一鍵打包與 config.js 設定教學 (必看!)
@@ -39,7 +40,8 @@ OnePage心理測驗開發/
 │       ├── partner-species-report/# 測驗 04: 對象成分暨物種分析報告
 │       ├── qixi-love-quiz/        # 測驗 05: 七夕戀愛依附型診斷 (ECR-S 12題)
 │       ├── qixi-love-quiz-en/     # 測驗 06: Love Attachment Style Quiz (English)
-│       └── mid-autumn-moon-quiz/  # 測驗 07: 月兔搗麻糬
+│       ├── mid-autumn-moon-quiz/  # 測驗 07: 月兔搗麻糬
+│       └── halloween-quiz/        # 測驗 08: 萬聖夜幽靈獵手（手電筒探險小遊戲）
 │
 ├── release/                       # 🚀 正式發佈資料夾 (部署至 GitHub Pages / 雲端託管)
 │   ├── index.html                 # 全站旗艦門戶頁 (Quiz Hub)
@@ -50,7 +52,8 @@ OnePage心理測驗開發/
 │       ├── partner-species-report/# 🔒 加密後之物種分析測驗頁面
 │       ├── qixi-love-quiz/        # 🔒 加密後之七夕戀愛依附測驗頁面
 │       ├── qixi-love-quiz-en/     # 🔒 加密後之英文戀愛依附測驗頁面
-│       └── mid-autumn-moon-quiz/  # 🔒 加密後之月兔搗麻糬遊戲頁面
+│       ├── mid-autumn-moon-quiz/  # 🌕 免密碼之月兔搗麻糬遊戲頁面
+│       └── halloween-quiz/        # 🎃 免密碼之萬聖夜幽靈獵手遊戲頁面
 │
 └── tools/                         # 🛠️ 自動化打包與加密工具
     ├── config.js                  # ⚠️ 測驗登錄設定檔 (新增測驗時必修改此處!)
@@ -83,7 +86,7 @@ OnePage心理測驗開發/
 ```bash
 node tools/build-and-encrypt.js
 ```
-腳本將自動縫合 CSS/JS 成為單一獨立 HTML，並帶入卡密與加密產物寫入至 `release/q/[quiz-id]/index.html`。
+腳本將自動縫合 CSS/JS，內嵌測驗使用的本機圖片與 MP3，並依 `tools/config.js` 的 `encrypt` 設定輸出加密或免密碼的單一 HTML 至 `release/q/[quiz-id]/index.html`。
 
 ### 4. 部署上線
 將 `release/` 目錄託管於 GitHub Pages / EdgeOne / Vercel 即可完成單一網域全站部署！
@@ -92,6 +95,7 @@ node tools/build-and-encrypt.js
 
 ## 📚 專案輔助說明文檔索引 (Documentation Index)
 
+- 🎃 [萬聖夜幽靈獵手企劃與稱號規則](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/proposals/halloween-quiz/PROPOSAL.md)
 - 💡 [心理測驗企劃提案與設計規範庫 (proposals/)](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/proposals/README.md)
 - 🤖 [AGENTS.md (AI Agent 開發規範與 SOP 指南)](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/AGENTS.md)
 - ⚙️ [GitHub Actions 全自動化 CI/CD 部署機制說明](file:///D:/專案設計/小紅書心理測驗開發與專案紀錄/docs/GITHUB_ACTIONS_DEPLOYMENT.md)

@@ -1,0 +1,585 @@
+:root {
+  --bg-pitch: #05060a;
+  --bg-slate: #0b0f19;
+  --bg-panel: rgba(15, 20, 34, 0.88);
+  --ecto-green: #34d399;
+  --ecto-cyan: #22d3ee;
+  --phantom-violet: #8b5cf6;
+  --phantom-light: #c4b5fd;
+  --spooky-orange: #fb923c;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border-glow: rgba(139, 92, 246, 0.36);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.16) 0%, transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(52, 211, 153, 0.1) 0%, transparent 45%),
+    linear-gradient(180deg, #090c15 0%, #05060a 100%);
+  color: var(--text-main);
+  font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow-x: hidden;
+}
+
+.app-shell {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.screen {
+  display: none;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100dvh;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* =========================================
+   1. 封面頁 (Start Screen) - 午夜幽靈電玩風
+   ========================================= */
+.start-screen {
+  justify-content: space-between;
+  padding: 22px 20px 24px;
+  text-align: center;
+}
+
+.top-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--ecto-green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  box-shadow: 0 0 16px rgba(52, 211, 153, 0.15);
+}
+
+.hero-header {
+  width: 100%;
+  margin: 12px 0 8px;
+}
+
+.eyebrow {
+  display: block;
+  color: var(--phantom-light);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  margin-bottom: 6px;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 55%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(139, 92, 246, 0.35));
+}
+
+.hero-subtitle {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
+.hero-illustration {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  height: 190px;
+  margin: 10px auto;
+  border-radius: 18px;
+  border: 1.5px solid rgba(139, 92, 246, 0.4);
+  background: #040508;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.65),
+    0 0 24px rgba(139, 92, 246, 0.18);
+  overflow: hidden;
+}
+
+#hero-preview-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.preview-tag {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  color: var(--ecto-cyan);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.how-to-play {
+  width: 100%;
+  display: grid;
+  gap: 8px;
+  margin: 6px 0 12px;
+}
+
+.step-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: var(--bg-panel);
+  text-align: left;
+}
+
+.step-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.16);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.step-pill strong {
+  display: block;
+  color: #f8fafc;
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+}
+
+.step-pill span {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.bottom-action-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.primary-btn {
+  width: 100%;
+  max-width: 360px;
+  padding: 15px 22px;
+  border: 1.5px solid rgba(52, 211, 153, 0.65);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 55%, #0d9488 100%);
+  color: #ffffff;
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow:
+    0 8px 24px rgba(124, 58, 237, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.primary-btn:active {
+  transform: scale(0.97);
+}
+
+.secondary-btn {
+  padding: 15px 20px;
+  border: 1.5px solid rgba(148, 163, 184, 0.35);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.9);
+  color: #e2e8f0;
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.footnote {
+  margin: 0;
+  color: #64748b;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+}
+
+/* =========================================
+   2. 遊戲關卡頁 (Game Screen)
+   ========================================= */
+.game-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  background: #030407;
+  overflow: hidden;
+  touch-action: none;
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.game-hud {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(94vw, 420px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  background: rgba(10, 14, 24, 0.85);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 76px;
+  padding-right: 10px;
+  border-right: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.hud-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ecto-green);
+}
+
+#hud-score {
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  text-shadow: 0 0 12px rgba(52, 211, 153, 0.6);
+}
+
+.hud-timer-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.timer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.combo-badge {
+  color: var(--phantom-light);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.timer-text {
+  color: #fff;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-bar {
+  width: 100%;
+  height: 7px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+#hud-timer-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #8b5cf6, #22d3ee, #34d399);
+  transition: width 0.15s linear;
+}
+
+.hud-sound-btn {
+  pointer-events: auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(139, 92, 246, 0.45);
+  background: rgba(17, 24, 39, 0.9);
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.game-footer-hint {
+  position: absolute;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92vw, 400px);
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.beam-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  background: rgba(9, 13, 22, 0.85);
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* =========================================
+   3. 結算與萬聖節獵人報告頁 (Result Screen)
+   ========================================= */
+.result-screen {
+  padding: 18px 18px 28px;
+  justify-content: flex-start;
+}
+
+.result-capture {
+  width: 100%;
+  position: relative;
+}
+
+.result-header-card {
+  position: relative;
+  padding: 18px 16px 12px;
+  border-radius: 20px 20px 0 0;
+  border: 1.5px solid var(--border-glow);
+  border-bottom: none;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.28) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(19, 25, 43, 0.96) 0%, rgba(12, 16, 28, 0.96) 100%);
+  text-align: center;
+}
+
+.result-limited {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid rgba(52, 211, 153, 0.5);
+  border-radius: 99px;
+  background: rgba(16, 185, 129, 0.14);
+  color: var(--ecto-green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.result-sublabel {
+  margin: 10px 0 4px;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.result-header-card h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  background: linear-gradient(90deg, #ffffff, #c4b5fd, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.result-art {
+  margin: 8px auto 0;
+  width: 100%;
+  max-width: 300px;
+  height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#result-art-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.result-card {
+  padding: 16px 16px 18px;
+  border-radius: 0 0 20px 20px;
+  border: 1.5px solid var(--border-glow);
+  background: var(--bg-panel);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+}
+
+.card-label {
+  display: block;
+  color: var(--ecto-cyan);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.result-ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.result-ingredients span {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  background: rgba(139, 92, 246, 0.12);
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.result-message-box {
+  margin: 8px 0 0;
+  padding: 14px 12px;
+  border-radius: 12px;
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.28);
+}
+
+.result-message-box p {
+  margin: 0;
+  color: #dbeafe;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.result-personal-inscription {
+  margin-top: 14px;
+  padding: 0 4px;
+}
+
+.result-personal-inscription p {
+  margin: 0;
+  color: var(--ecto-green);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.result-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.45fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.result-music-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 16px;
+  border: 1px solid rgba(196, 181, 253, 0.45);
+  border-radius: 12px;
+  background: rgba(139, 92, 246, 0.13);
+  color: #e9d5ff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.result-music-btn:active {
+  transform: scale(0.98);
+}
+
+/* 傳奇天選樣式 */
+.is-legendary .result-header-card {
+  border-color: rgba(34, 211, 238, 0.7);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.3) 0%, transparent 70%),
+    linear-gradient(180deg, #131c31 0%, #0b101e 100%);
+}
+
+.is-legendary .result-limited {
+  background: linear-gradient(90deg, #0d9488, #7c3aed);
+  border-color: #22d3ee;
+  color: #ffffff;
+}
+
+/* Toast 提示 */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 10px 20px;
+  border-radius: 99px;
+  border: 1px solid var(--ecto-green);
+  background: rgba(11, 15, 25, 0.95);
+  color: var(--ecto-green);
+  font-size: 13.5px;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 100;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

@@ -77,12 +77,12 @@ Object.keys(config).forEach(quizId => {
     return `${before}${dataUri}${after}`;
   });
 
-  // JavaScript 或 CSS 中直接引用的本機圖片也需內嵌，避免 standalone release 遺失 Canvas 素材。
-  bundleHtml = bundleHtml.replace(/(["'])assets\/([^"']+\.(?:png|jpe?g|webp|gif|svg))\1/gi, (match, quote, relativeAsset) => {
+  // HTML、JavaScript 或 CSS 中引用的本機圖片與音樂都需內嵌，維持單檔發佈。
+  bundleHtml = bundleHtml.replace(/(["'])assets\/([^"']+\.(?:png|jpe?g|webp|gif|svg|mp3))\1/gi, (match, quote, relativeAsset) => {
     const assetPath = path.resolve(quizSrcPath, 'assets', relativeAsset);
     if (!assetPath.startsWith(quizSrcPath) || !fs.existsSync(assetPath)) return match;
     const ext = path.extname(assetPath).toLowerCase();
-    const mimeTypes = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif', '.svg': 'image/svg+xml' };
+    const mimeTypes = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif', '.svg': 'image/svg+xml', '.mp3': 'audio/mpeg' };
     const mime = mimeTypes[ext];
     if (!mime) return match;
     return `${quote}data:${mime};base64,${fs.readFileSync(assetPath).toString('base64')}${quote}`;

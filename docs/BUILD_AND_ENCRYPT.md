@@ -51,6 +51,7 @@ node tools/build-and-encrypt.js
 2. 將 CSS 與 JS 自動「縫合/內聯 (Inline)」進 HTML 中，產生單一獨立 HTML 檔案（無外連檔案破綻）。
 3. 帶入在 `tools/config.js` 中設定的 Title、說明文字與卡密。
 4. 將加密/單一檔案自動輸出至 `release/q/[quiz-id]/index.html`。
+5. 將 `assets/` 中被頁面引用的本機圖片與 MP3 內嵌為 Data URI；設定 `encrypt: false` 的測驗會輸出免密碼的單一 HTML。
 
 ---
 

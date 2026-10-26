@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>萬聖夜幽靈獵手｜OnePage 心理測驗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <!-- 1. 封面頁 (Start Screen) -->
+    <section id="start-screen" class="screen active start-screen">
+      <div class="top-tag">HALLOWEEN FLASHLIGHT ARCHIVE · 10.31</div>
+
+      <div class="hero-header">
+        <span class="eyebrow">👻 TRICK OR TREAT SHOOTER</span>
+        <h1 class="hero-title">萬聖夜幽靈獵手</h1>
+        <p class="hero-subtitle">午夜停電的廢棄洋館裡，幽靈正在偷吃糖果！<br>滑動你的手電筒照亮黑暗，發射光束逮捕牠們</p>
+      </div>
+
+      <!-- 動態手電筒互動預覽舞台 -->
+      <div class="hero-illustration">
+        <canvas id="hero-preview-canvas" width="360" height="220" aria-label="萬聖節手電筒預覽"></canvas>
+        <span class="preview-tag">🔦 LIVE FLASHLIGHT PREVIEW</span>
+      </div>
+
+      <div class="how-to-play">
+        <div class="step-pill">
+          <span class="step-icon">🔦</span>
+          <div>
+            <strong>滑動手電筒探照</strong>
+            <span>在漆黑畫面中拖曳光圈找出隱藏目標</span>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span class="step-icon">⚡</span>
+          <div>
+            <strong>點擊發射光束</strong>
+            <span>照亮後點擊目標得分；避開 ☠️ 詛咒骷髏，誤擊會扣 220 分並中斷連擊</span>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span class="step-icon">🍬</span>
+          <div>
+            <strong>30 秒萬聖狩獵報告</strong>
+            <span>結算你的幽靈獵人等級與萬聖節專屬卡片</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-action-group">
+        <button id="start-btn" class="primary-btn">開啟手電筒 · 進入洋館 <span>➔</span></button>
+        <p class="footnote">單局 30 秒 · 南瓜燈在第 10–15 秒、木乃伊在第 20–25 秒各出現一次</p>
+      </div>
+    </section>
+
+    <!-- 2. 遊戲關卡頁 (Game Screen) -->
+    <section id="game-screen" class="screen game-screen" aria-label="手電筒射擊關卡">
+      <canvas id="gameCanvas"></canvas>
+
+      <!-- 頂部 HUD 狀態列 -->
+      <header class="game-hud">
+        <div class="hud-box score-box">
+          <span class="hud-label">SCORE</span>
+          <strong id="hud-score">0</strong>
+        </div>
+
+        <div class="hud-timer-wrap">
+          <div class="timer-top">
+            <span id="hud-combo" class="combo-badge">🔦 移動手電筒尋寶</span>
+            <span class="timer-text"><b id="hud-time">30</b>s</span>
+          </div>
+          <div class="timer-bar">
+            <i id="hud-timer-fill"></i>
+          </div>
+        </div>
+
+        <button id="sound-toggle" class="hud-sound-btn" type="button" aria-label="切換音效">🔊</button>
+      </header>
+
+      <!-- 底部操作提示 -->
+      <footer class="game-footer-hint">
+        <span id="beam-status-pill" class="beam-pill">🔦 避開 ☠️ 骷髏；限時圖片彩蛋可連點，每次 +5 分</span>
+      </footer>
+    </section>
+
+    <!-- 3. 結算與萬聖節獵人報告頁 (Result Screen) -->
+    <section id="result-screen" class="screen result-screen" aria-live="polite">
+      <div id="result-capture" class="result-capture">
+        <div class="result-header-card">
+          <div id="result-badge" class="result-limited">HALLOWEEN HUNTER REPORT</div>
+          <p class="result-sublabel">今夜你的萬聖節靈魂稱號</p>
+          <h2 id="result-name">古堡傳奇・幽靈神射手</h2>
+          <div class="result-art">
+            <canvas id="result-art-canvas" width="520" height="220" aria-label="萬聖節戰利品插畫"></canvas>
+          </div>
+        </div>
+
+        <article class="result-card">
+          <span class="card-label">📊 午夜狩獵戰績</span>
+          <div id="result-stats" class="result-ingredients"></div>
+
+          <div class="result-message-box">
+            <span class="card-label">🔮 靈魂啟示</span>
+            <p id="result-revelation"></p>
+          </div>
+          <div class="result-personal-inscription">
+            <span class="card-label">✦ 專屬銘文</span>
+            <p id="result-personal-inscription"></p>
+          </div>
+        </article>
+      </div>
+
+      <button id="result-music-btn" class="result-music-btn" type="button" aria-pressed="false">🎵 播放結果音樂</button>
+      <div class="result-actions">
+        <button id="restart-btn" class="secondary-btn" type="button">再挑戰一次</button>
+        <button id="share-btn" class="primary-btn" type="button">下載萬聖獵人卡</button>
+      </div>
+    </section>
+  </main>
+
+  <audio id="result-music" src="assets/result-music.mp3" preload="auto"></audio>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

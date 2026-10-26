@@ -126,5 +126,17 @@ module.exports = {
     encrypt: false,
     themeColor: "#d93829",
     bgStyle: "linear-gradient(155deg, #0d0a14 0%, #171324 55%, #3a1c29 100%)",
+  },
+
+  "halloween-quiz": {
+    id: "halloween-quiz",
+    title: "萬聖夜幽靈獵手｜OnePage 心理測驗",
+    encrypt: false,
+    passcode: "1031",
+    instructions: "請輸入 4 位數解鎖卡密（示範卡密：1031）",
+    placeholder: "請輸入解鎖卡密",
+    buttonText: "點亮手電筒 ➔",
+    themeColor: "#ff7518",
+    bgStyle: "linear-gradient(155deg, #070510 0%, #150b26 55%, #2c1347 100%)",
   }
 };
